@@ -8,6 +8,9 @@ androidxAppCompat = "1.6.1"
 constraintlayout = "2.1.4"
 material = "1.10.0"
 
+# Navigation
+androidxNavigation = "2.7.5"
+
 # Test
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -18,6 +21,10 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+
+# Navigation
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -30,6 +37,10 @@ android-base = [
     "androidx-appcompat",
     "androidx-constraintlayout",
     "material"
+]
+android-navigation = [
+    "androidx-navigation-fragment",
+    "androidx-navigation-ui"
 ]
 unit-test = [
     "junit4"

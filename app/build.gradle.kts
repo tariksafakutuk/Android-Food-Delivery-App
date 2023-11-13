@@ -1,4 +1,5 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
@@ -39,6 +40,7 @@ android {
 dependencies {
 
     implementation(libs.bundles.android.base)
+    implementation(libs.bundles.android.navigation)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }
