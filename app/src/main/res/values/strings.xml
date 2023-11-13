@@ -10,4 +10,8 @@
     <string name="username_title">Kullanıcı Adı</string>
     <string name="sign_up_button_text">Hesap Oluştur</string>
     <string name="login_click_text">Bir hesabın var mı? Giriş Yap!</string>
+    <string name="buttom_nav_home">Anasayfa</string>
+    <string name="buttom_nav_favorites">Favorilerim</string>
+    <string name="buttom_nav_cart">Sepetim</string>
+    <string name="buttom_nav_account">Hesabım</string>
 </resources>

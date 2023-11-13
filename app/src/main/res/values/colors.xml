@@ -7,4 +7,6 @@
     <color name="bg_bottom_selected">#F26A4B</color>
     <color name="bg_login_button">#F26A4B</color>
     <color name="progress_bar">#F26A4B</color>
+    <color name="bottom_nav_icon_unselected">#A9ABB6</color>
+    <color name="bottom_nav_icon_selected">#F26A4B</color>
 </resources>
