@@ -1,60 +1,97 @@
 package com.example.foodie.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.example.foodie.R
+import com.example.foodie.databinding.FragmentLoginBinding
+import com.example.foodie.datastore.LoginPref
+import com.example.foodie.utils.changePage
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        val loginPref = LoginPref(requireContext())
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val email = loginPref.readEmail()
+            val username = loginPref.readUsername()
+            val password = loginPref.readPassword()
+
+            if ((email == "test@gmail.com" || username == "test") && password == "1234") {
+                binding.ivLogin.visibility = View.GONE
+                binding.tvLogin.visibility = View.GONE
+                binding.tvAccountLogin.visibility = View.GONE
+                binding.accountLoginLayout.visibility = View.GONE
+                binding.tvPasswordLogin.visibility = View.GONE
+                binding.passwordLoginLayout.visibility = View.GONE
+                binding.buttonLogin.visibility = View.GONE
+                binding.tvSignUpClick.visibility = View.GONE
+                binding.tvProgressLogin.visibility = View.VISIBLE
+                binding.progressBarLogin.visibility = View.VISIBLE
+
+                delay(2000)
+
+                clickView(binding.tvLogin, R.id.action_loginFragment_to_homePageFragment)
+            }
+        }
+
+        binding.buttonLogin.setOnClickListener {
+            val account = binding.editTextAccountLogin.text.toString()
+            val password = binding.editTextPasswordLogin.text.toString()
+
+            if (account == "test" || account == "test@gmail.com") {
+                if (password == "1234") {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        loginPref.createEmail("test@gmail.com")
+                        loginPref.createUsername("test")
+                        loginPref.createPassword("1234")
+
+                        binding.ivLogin.visibility = View.GONE
+                        binding.tvLogin.visibility = View.GONE
+                        binding.tvAccountLogin.visibility = View.GONE
+                        binding.accountLoginLayout.visibility = View.GONE
+                        binding.tvPasswordLogin.visibility = View.GONE
+                        binding.passwordLoginLayout.visibility = View.GONE
+                        binding.buttonLogin.visibility = View.GONE
+                        binding.tvSignUpClick.visibility = View.GONE
+                        binding.tvProgressLogin.visibility = View.VISIBLE
+                        binding.progressBarLogin.visibility = View.VISIBLE
+
+                        delay(2000)
+
+                        clickView(it, R.id.action_loginFragment_to_homePageFragment)
+                    }
+                } else {
+                    Snackbar.make(it, "Şifre Hatalı", Snackbar.LENGTH_SHORT).show()
+                }
+            } else {
+                Snackbar.make(it, "Kullanıcı Adı veya Email Hatalı", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.tvSignUpClick.setOnClickListener {
+            clickView(it, R.id.action_loginFragment_to_signUpFragment)
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun clickView(view: View, id: Int) {
+        Navigation.changePage(view, id)
     }
 }
