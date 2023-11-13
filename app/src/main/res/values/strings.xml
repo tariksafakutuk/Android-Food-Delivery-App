@@ -6,4 +6,8 @@
     <string name="login_button_text">Giriş Yapın</string>
     <string name="sign_up_click_text">Bir hesabın yok mu? Hesap Oluştur!</string>
     <string name="progress_bar_text">Giriş Yapılıyor…</string>
+    <string name="email_title">Email</string>
+    <string name="username_title">Kullanıcı Adı</string>
+    <string name="sign_up_button_text">Hesap Oluştur</string>
+    <string name="login_click_text">Bir hesabın var mı? Giriş Yap!</string>
 </resources>

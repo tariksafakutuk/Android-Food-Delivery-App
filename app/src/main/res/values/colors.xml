@@ -6,5 +6,5 @@
     <color name="bg_bottom_unselected">#EBEBEE</color>
     <color name="bg_bottom_selected">#F26A4B</color>
     <color name="bg_login_button">#F26A4B</color>
-
+    <color name="progress_bar">#F26A4B</color>
 </resources>
