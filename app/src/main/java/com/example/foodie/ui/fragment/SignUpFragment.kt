@@ -5,56 +5,78 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.example.foodie.R
+import com.example.foodie.databinding.FragmentSignUpBinding
+import com.example.foodie.datastore.LoginPref
+import com.example.foodie.utils.changePage
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentSignUpBinding
+    private lateinit var loginPref: LoginPref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+    ): View {
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+
+        loginPref = LoginPref(requireContext())
+
+        binding.buttonSignUp.setOnClickListener {
+            val email = binding.editTextEmailSignUp.text.toString()
+            val username = binding.editTextUsernameSignUp.text.toString()
+            val password = binding.editTextPasswordSignUp.text.toString()
+
+            if (email != "" && username != "" && password != "") {
+                clickButton(it, email, username, password)
+            } else {
+                Snackbar.make(it, "Lütfen Tüm Alanları Doldurunuz!", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.tvLoginClick.setOnClickListener {
+            clickTextView(it)
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun clickButton(view: View, email: String, username: String, password: String) {
+        Snackbar.make(view, "Hesap Oluşturma İşlemini Onaylıyor Musunuz?", Snackbar.LENGTH_SHORT)
+            .setAction("Evet") {
+                CoroutineScope(Dispatchers.Main).launch {
+                    loginPref.createEmail(email)
+                    loginPref.createUsername(username)
+                    loginPref.createPassword(password)
+
+                    binding.ivSignUp.visibility = View.GONE
+                    binding.tvSignUp.visibility = View.GONE
+                    binding.tvEmailSignUp.visibility = View.GONE
+                    binding.emailSignUpLayout.visibility = View.GONE
+                    binding.tvUsernameSignUp.visibility = View.GONE
+                    binding.usernameSignUpLayout.visibility = View.GONE
+                    binding.tvPasswordSignUp.visibility = View.GONE
+                    binding.passwordSignUpLayout.visibility = View.GONE
+                    binding.buttonSignUp.visibility = View.GONE
+                    binding.tvLoginClick.visibility = View.GONE
+                    binding.tvProgressSignUp.visibility = View.VISIBLE
+                    binding.progressBarSignUp.visibility = View.VISIBLE
+
+                    delay(2000)
+
+                    Navigation.changePage(view, R.id.action_signUpFragment_to_homePageFragment)
                 }
             }
+            .show()
+    }
+
+    fun clickTextView(view: View) {
+        Navigation.changePage(view, R.id.action_signUpFragment_to_loginFragment)
     }
 }
