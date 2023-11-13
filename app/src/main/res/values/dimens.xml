@@ -6,4 +6,6 @@
     <dimen name="login_button_text">18sp</dimen>
     <dimen name="login_click_text">14sp</dimen>
     <dimen name="progress_bar_text">20sp</dimen>
+    <dimen name="header_name">16sp</dimen>
+    <dimen name="header_text">14sp</dimen>
 </resources>

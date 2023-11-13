@@ -14,4 +14,6 @@
     <string name="buttom_nav_favorites">Favorilerim</string>
     <string name="buttom_nav_cart">Sepetim</string>
     <string name="buttom_nav_account">Hesabım</string>
+    <string name="header_name">Merhaba, %1$s</string>
+    <string name="header_text">Hadi yemeğini alalım!</string>
 </resources>

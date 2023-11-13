@@ -9,4 +9,6 @@
     <color name="progress_bar">#F26A4B</color>
     <color name="bottom_nav_icon_unselected">#A9ABB6</color>
     <color name="bottom_nav_icon_selected">#F26A4B</color>
+    <color name="bg_header">#FFEEC0</color>
+    <color name="header_text">#A9ABB6</color>
 </resources>
