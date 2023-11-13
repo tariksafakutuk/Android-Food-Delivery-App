@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_name_text">28sp</dimen>
+    <dimen name="login_title">12sp</dimen>
+    <dimen name="edit_text_login">14sp</dimen>
+    <dimen name="login_button_text">18sp</dimen>
+    <dimen name="login_click_text">14sp</dimen>
+    <dimen name="progress_bar_text">20sp</dimen>
+</resources>
