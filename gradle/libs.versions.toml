@@ -11,6 +11,11 @@ material = "1.10.0"
 # Navigation
 androidxNavigation = "2.7.5"
 
+# DataStore
+androidxDataStore = "1.0.0"
+androidxLifecycle = "2.6.2"
+kotlinxCoroutines = "1.7.1"
+
 # Test
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -25,6 +30,12 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 # Navigation
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
+
+# DataStore
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidxDataStore" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -41,6 +52,14 @@ android-base = [
 android-navigation = [
     "androidx-navigation-fragment",
     "androidx-navigation-ui"
+]
+android-datastore = [
+    "androidx-datastore-preferences",
+    "androidx-lifecycle-livedata"
+]
+kotlin-coroutines = [
+    "kotlinx-coroutines-core",
+    "kotlinx-coroutines-android"
 ]
 unit-test = [
     "junit4"
