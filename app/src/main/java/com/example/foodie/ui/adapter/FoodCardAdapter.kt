@@ -3,10 +3,13 @@ package com.example.foodie.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
 import com.example.foodie.data.entity.Food
 import com.example.foodie.databinding.FoodCardBinding
+import com.example.foodie.ui.fragment.HomePageFragmentDirections
+import com.example.foodie.utils.changePage
 
 class FoodCardAdapter(private var mContext: Context, private var foodList: List<Food>) :
     RecyclerView.Adapter<FoodCardAdapter.FoodCardHolder>() {
@@ -34,6 +37,11 @@ class FoodCardAdapter(private var mContext: Context, private var foodList: List<
             binding.ivFavoriteButton.setImageResource(
                 mContext.resources.getIdentifier(R.drawable.vc_favorite.toString(), "drawable", mContext.packageName)
             )
+        }
+
+        binding.foodCard.setOnClickListener {
+            val direction = HomePageFragmentDirections.actionHomePageFragmentToProductDetailFragment(food = food)
+            Navigation.changePage(it, direction)
         }
     }
 
