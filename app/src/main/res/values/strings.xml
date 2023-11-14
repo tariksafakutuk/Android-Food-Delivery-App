@@ -16,4 +16,7 @@
     <string name="buttom_nav_account">Hesabım</string>
     <string name="header_name">Merhaba, %1$s</string>
     <string name="header_text">Hadi yemeğini alalım!</string>
+    <string name="discount_text">%10 İndirimli</string>
+    <string name="cargo_text">Ücretsiz Teslimat</string>
+    <string name="time_text">15-20 Dakika</string>
 </resources>

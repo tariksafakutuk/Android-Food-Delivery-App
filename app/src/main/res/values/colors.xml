@@ -11,4 +11,7 @@
     <color name="bottom_nav_icon_selected">#F26A4B</color>
     <color name="bg_header">#FFEEC0</color>
     <color name="header_text">#A9ABB6</color>
+    <color name="bg_food_card">#FFEEC0</color>
+    <color name="food_card_border">#A9ABB6</color>
+    <color name="food_card_item">#F26A4B</color>
 </resources>
