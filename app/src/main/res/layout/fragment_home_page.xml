@@ -4,76 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_page"
     tools:context=".ui.fragment.HomePageFragment">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_header"
-        android:orientation="vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/ivAvatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_weight="5"
+            app:srcCompat="@drawable/ic_avatar"
+            tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/ivAvatar"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvHeaderName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/ic_avatar"
-                tools:ignore="ContentDescription" />
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/header_name" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvHeaderContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvHeaderName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/header_name" />
-
-                <TextView
-                    android:id="@+id/tvHeaderContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/header_text"
-                    android:textColor="@color/header_text"
-                    android:textSize="@dimen/header_text"
-                    tools:ignore="TextContrastCheck" />
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:text="@string/header_text"
+                android:textColor="@color/header_text"
+                android:textSize="@dimen/header_text"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_search_view"
-            android:backgroundTint="@color/white"
-            android:iconifiedByDefault="false"
-            android:paddingStart="-10dp"
-            android:queryBackground="@null"
-            android:queryHint="Yemek ara"
-            tools:ignore="RtlSymmetry,VisualLintBounds" />
-
     </LinearLayout>
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_search_view"
+        android:iconifiedByDefault="false"
+        android:paddingStart="-10dp"
+        android:queryBackground="@null"
+        android:queryHint="Yemek ara"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:ignore="RtlSymmetry,VisualLintBounds" />
+
+    <TextView
+        android:id="@+id/tvFoodCardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/food_card_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/food_card_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFoodCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFoodCardTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

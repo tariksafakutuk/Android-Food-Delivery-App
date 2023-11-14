@@ -8,6 +8,7 @@
     <dimen name="progress_bar_text">20sp</dimen>
     <dimen name="header_name">16sp</dimen>
     <dimen name="header_text">14sp</dimen>
+    <dimen name="food_card_title">16sp</dimen>
     <dimen name="food_card_discount">16sp</dimen>
     <dimen name="food_card_name">20sp</dimen>
     <dimen name="food_card_content">13sp</dimen>

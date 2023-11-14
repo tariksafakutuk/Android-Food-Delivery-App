@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_page">#FFF8EB</color>
     <color name="login_title">#A9ABB6</color>
     <color name="bg_bottom_unselected">#EBEBEE</color>
     <color name="bg_bottom_selected">#F26A4B</color>
@@ -9,8 +10,9 @@
     <color name="progress_bar">#F26A4B</color>
     <color name="bottom_nav_icon_unselected">#A9ABB6</color>
     <color name="bottom_nav_icon_selected">#F26A4B</color>
-    <color name="bg_header">#FFEEC0</color>
     <color name="header_text">#A9ABB6</color>
+    <color name="bg_search_view">#FFEEC0</color>
+    <color name="search_view_border">#A9ABB6</color>
     <color name="bg_food_card">#FFEEC0</color>
     <color name="food_card_border">#A9ABB6</color>
     <color name="food_card_item">#F26A4B</color>
