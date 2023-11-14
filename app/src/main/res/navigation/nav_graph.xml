@@ -50,7 +50,7 @@
         android:id="@+id/productDetailFragment"
         android:name="com.example.foodie.ui.fragment.ProductDetailFragment"
         android:label="fragment_product_detail"
-        tools:layout="@layout/fragment_product_detail" >
+        tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="food"
             app:argType="com.example.foodie.data.entity.Food" />
@@ -59,7 +59,14 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.foodie.ui.fragment.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.foodie.ui.fragment.CartFragment"
