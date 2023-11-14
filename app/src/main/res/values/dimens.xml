@@ -12,4 +12,8 @@
     <dimen name="food_card_discount">16sp</dimen>
     <dimen name="food_card_name">20sp</dimen>
     <dimen name="food_card_content">13sp</dimen>
+    <dimen name="favorite_card_discount">16sp</dimen>
+    <dimen name="favorite_card_name">20sp</dimen>
+    <dimen name="favorite_card_price">16sp</dimen>
+    <dimen name="favorite_card_button">14sp</dimen>
 </resources>

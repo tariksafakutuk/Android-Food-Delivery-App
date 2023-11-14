@@ -20,4 +20,6 @@
     <string name="discount_text">%10 İndirimli</string>
     <string name="cargo_text">Ücretsiz Teslimat</string>
     <string name="time_text">15–20 Dakika</string>
+    <string name="favorite_discount_text">-10%</string>
+    <string name="cart_button_text">Sepete Ekle</string>
 </resources>

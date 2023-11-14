@@ -16,4 +16,7 @@
     <color name="bg_food_card">#FFEEC0</color>
     <color name="food_card_border">#A9ABB6</color>
     <color name="food_card_item">#F26A4B</color>
+    <color name="bg_favorite_card">#FFEEC0</color>
+    <color name="favorite_card_border">#A9ABB6</color>
+    <color name="favorite_card_item">#F26A4B</color>
 </resources>
