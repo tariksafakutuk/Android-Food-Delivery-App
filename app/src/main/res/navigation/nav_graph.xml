@@ -63,9 +63,6 @@
         <action
             android:id="@+id/action_favoritesFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
-        <action
-            android:id="@+id/action_favoritesFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
