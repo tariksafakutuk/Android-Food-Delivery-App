@@ -19,4 +19,7 @@
     <color name="bg_favorite_card">#FFEEC0</color>
     <color name="favorite_card_border">#A9ABB6</color>
     <color name="favorite_card_item">#F26A4B</color>
+    <color name="bg_cart_card">#FFEEC0</color>
+    <color name="cart_card_border">#A9ABB6</color>
+    <color name="cart_card_item">#F26A4B</color>
 </resources>

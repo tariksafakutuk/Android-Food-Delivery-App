@@ -22,4 +22,5 @@
     <string name="time_text">15–20 Dakika</string>
     <string name="favorite_discount_text">-10%</string>
     <string name="cart_button_text">Sepete Ekle</string>
+    <string name="cart_cargo_text">15 Dakika İçinde Kuryeye Teslim</string>
 </resources>
