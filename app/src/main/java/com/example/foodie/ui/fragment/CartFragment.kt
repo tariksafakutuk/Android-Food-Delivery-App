@@ -1,60 +1,57 @@
 package com.example.foodie.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.foodie.R
+import com.example.foodie.data.entity.CartFood
+import com.example.foodie.databinding.FragmentCartBinding
+import com.example.foodie.ui.adapter.CartCardAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCartBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
-    }
+    ): View {
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+        binding = FragmentCartBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        binding.rvCartCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+        val cartFoodList = ArrayList<CartFood>()
+        val cf1 = CartFood(1, "Ayran", "ayran", 15, 2, "tariksafakutuk")
+        val cf2 = CartFood(2, "Baklava", "ayran", 10, 3, "tariksafakutuk")
+        cartFoodList.add(cf1)
+        cartFoodList.add(cf2)
+
+        if (cartFoodList.size == 0) {
+            binding.rvCartCard.visibility = View.GONE
+            binding.linearLayoutTotal.visibility = View.GONE
+            binding.ivCartNoData.visibility = View.VISIBLE
+            binding.tvCartNoData.visibility = View.VISIBLE
+        } else {
+            binding.rvCartCard.visibility = View.VISIBLE
+            binding.linearLayoutTotal.visibility = View.VISIBLE
+            binding.ivCartNoData.visibility = View.GONE
+            binding.tvCartNoData.visibility = View.GONE
+
+            val cartCardAdapter = CartCardAdapter(requireContext(), cartFoodList)
+            binding.rvCartCard.adapter = cartCardAdapter
+
+            binding.tvCartTotal.text = "${(cf1.foodPrice * cf1.foodQuantity) + (cf2.foodPrice * cf2.foodQuantity)} TL"
+
+            binding.buttonCartTotal.setOnClickListener {
+                Log.e("Message", "Delete cart total")
             }
+        }
+
+        return binding.root
     }
 }
