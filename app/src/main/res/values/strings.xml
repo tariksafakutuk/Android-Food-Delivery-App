@@ -23,4 +23,8 @@
     <string name="favorite_discount_text">-10%</string>
     <string name="cart_button_text">Sepete Ekle</string>
     <string name="cart_cargo_text">15 Dakika İçinde Kuryeye Teslim</string>
+    <string name="cart_total_title">Toplam</string>
+    <string name="cart_total_cargo">Kargo Ücretsiz</string>
+    <string name="cart_total_button">Sepeti Onayla</string>
+    <string name="cart_no_data">Sepetinizde ürün bulunmamaktadır.</string>
 </resources>

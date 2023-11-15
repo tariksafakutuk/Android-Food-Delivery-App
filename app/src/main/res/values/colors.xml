@@ -22,4 +22,6 @@
     <color name="bg_cart_card">#FFEEC0</color>
     <color name="cart_card_border">#A9ABB6</color>
     <color name="cart_card_item">#F26A4B</color>
+    <color name="cart_total">#F26A4B</color>
+    <color name="cart_total_cargo">#18A80F</color>
 </resources>

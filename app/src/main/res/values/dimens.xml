@@ -16,7 +16,13 @@
     <dimen name="favorite_card_name">20sp</dimen>
     <dimen name="favorite_card_price">16sp</dimen>
     <dimen name="favorite_card_button">14sp</dimen>
+    <dimen name="page_title">18sp</dimen>
     <dimen name="cart_card_name">20sp</dimen>
     <dimen name="cart_card_cargo">12sp</dimen>
     <dimen name="cart_card_content">16sp</dimen>
+    <dimen name="cart_total_title">16sp</dimen>
+    <dimen name="cart_total">16sp</dimen>
+    <dimen name="cart_total_cargo">14sp</dimen>
+    <dimen name="cart_total_button">14sp</dimen>
+    <dimen name="cart_no_data">16sp</dimen>
 </resources>
