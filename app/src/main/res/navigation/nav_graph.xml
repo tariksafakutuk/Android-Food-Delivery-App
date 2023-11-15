@@ -73,5 +73,18 @@
         android:id="@+id/accountFragment"
         android:name="com.example.foodie.ui.fragment.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_accountDetailFragment"
+            app:destination="@id/accountDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountDetailFragment"
+        android:name="com.example.foodie.ui.fragment.AccountDetailFragment"
+        android:label="fragment_account_detail"
+        tools:layout="@layout/fragment_account_detail">
+        <argument
+            android:name="action"
+            app:argType="string" />
+    </fragment>
 </navigation>
