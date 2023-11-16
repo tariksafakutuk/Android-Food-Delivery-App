@@ -25,4 +25,5 @@
     <color name="cart_total">#F26A4B</color>
     <color name="cart_total_cargo">#18A80F</color>
     <color name="account_card_item">#474747</color>
+    <color name="bg_update_button">#F26A4B</color>
 </resources>

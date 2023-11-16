@@ -27,4 +27,5 @@
     <string name="cart_total_cargo">Kargo Ücretsiz</string>
     <string name="cart_total_button">Sepeti Onayla</string>
     <string name="cart_no_data">Sepetinizde ürün bulunmamaktadır.</string>
+    <string name="update_account_button">Güncelle</string>
 </resources>

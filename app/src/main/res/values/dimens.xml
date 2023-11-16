@@ -25,4 +25,5 @@
     <dimen name="cart_total_cargo">14sp</dimen>
     <dimen name="cart_total_button">14sp</dimen>
     <dimen name="cart_no_data">16sp</dimen>
+    <dimen name="update_account_button">18sp</dimen>
 </resources>
