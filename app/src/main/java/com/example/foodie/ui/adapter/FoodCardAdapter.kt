@@ -29,8 +29,7 @@ class FoodCardAdapter(private var mContext: Context, private var foodList: List<
         val binding = holder.design
         var isFavorite = false
 
-        binding.tvFoodName.text = food.foodName
-        binding.tvFoodPrice.text = "${food.foodPrice} TL"
+        binding.foodObject = food
 
         binding.ivFood.setImageResource(
             mContext.resources.getIdentifier(food.foodImageName, "drawable", mContext.packageName)
