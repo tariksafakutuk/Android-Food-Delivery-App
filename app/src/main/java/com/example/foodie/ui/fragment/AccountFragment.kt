@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.databinding.DataBindingUtil
 import com.example.foodie.R
 import com.example.foodie.data.entity.AccountCardItem
 import com.example.foodie.databinding.FragmentAccountBinding
@@ -20,9 +20,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
-        binding = FragmentAccountBinding.inflate(inflater, container, false)
-
-        binding.rvAccountCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false)
 
         val accountCardItemList = ArrayList<AccountCardItem>()
         val a1 = AccountCardItem("vc_email", "Email Değişikliği")
@@ -32,8 +30,7 @@ class AccountFragment : Fragment() {
         accountCardItemList.add(a2)
         accountCardItemList.add(a3)
 
-        val accountCardAdapter = AccountCardAdapter(requireContext(), accountCardItemList)
-        binding.rvAccountCard.adapter = accountCardAdapter
+        binding.accountCardAdapter = AccountCardAdapter(requireContext(), accountCardItemList)
 
         return binding.root
     }
