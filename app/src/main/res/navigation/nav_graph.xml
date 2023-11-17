@@ -54,6 +54,9 @@
         <argument
             android:name="food"
             app:argType="com.example.foodie.data.entity.Food" />
+        <argument
+            android:name="isFavorite"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
