@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
@@ -21,7 +22,7 @@ class FavoriteCardAdapter(
         RecyclerView.ViewHolder(design.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteCardHolder {
-        val binding = FavoriteCardBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding: FavoriteCardBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.favorite_card, parent, false)
         return FavoriteCardHolder(binding)
     }
 
@@ -33,8 +34,7 @@ class FavoriteCardAdapter(
             mContext.resources.getIdentifier(favoriteFood.foodImageName, "drawable", mContext.packageName)
         )
 
-        binding.tvFavoriteFoodName.text = favoriteFood.foodName
-        binding.tvFavoriteFoodPrice.text = "${favoriteFood.foodPrice} TL"
+        binding.favoriteFoodObject = favoriteFood
 
         binding.ivFavoriteButton.setOnClickListener {
             Log.e("Message", "Delete favorite food")
