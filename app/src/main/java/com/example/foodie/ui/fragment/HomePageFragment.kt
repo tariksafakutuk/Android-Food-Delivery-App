@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import android.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import com.example.foodie.R
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
@@ -23,16 +25,13 @@ class HomePageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomePageBinding.inflate(inflater, container, false)
-
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.bg_page)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
         val loginPref = LoginPref(requireContext())
 
         CoroutineScope(Dispatchers.Main).launch {
-            binding.tvHeaderName.text =
-                resources.getString(R.string.header_name, loginPref.readUsername())
+            binding.username = resources.getString(R.string.header_name, loginPref.readUsername())
         }
-
-        binding.rvFoodCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         val foodCardList = ArrayList<Food>()
         val f1 = Food(1, "Ayran", "ayran", 15)
@@ -44,9 +43,25 @@ class HomePageFragment : Fragment() {
         val ff1 = FavoriteFood(1, 2, "Baklava", "ayran", 15)
         favoriteFoodList.add(ff1)
 
-        val foodCardAdapter = FoodCardAdapter(requireContext(), foodCardList, favoriteFoodList)
-        binding.rvFoodCard.adapter = foodCardAdapter
+        binding.foodCardAdapter = FoodCardAdapter(requireContext(), foodCardList, favoriteFoodList)
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchFood(query, foodCardList, favoriteFoodList)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchFood(newText, foodCardList, favoriteFoodList)
+                return true
+            }
+
+        })
         return binding.root
+    }
+
+    fun searchFood(searchQuery: String, foodCardList: ArrayList<Food>, favoriteFoodList: ArrayList<FavoriteFood>) {
+        val filteredList = foodCardList.filter { it.foodName.lowercase().contains(searchQuery.lowercase()) }
+        binding.foodCardAdapter = FoodCardAdapter(requireContext(), filteredList, favoriteFoodList)
     }
 }

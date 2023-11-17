@@ -1,98 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_page"
-    tools:context=".ui.fragment.HomePageFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <data>
+
+        <variable
+            name="username"
+            type="String" />
+
+        <variable
+            name="foodCardAdapter"
+            type="com.example.foodie.ui.adapter.FoodCardAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            app:srcCompat="@drawable/ic_avatar"
-            tools:ignore="ContentDescription" />
+        android:layout_height="match_parent"
+        android:background="@color/bg_page"
+        tools:context=".ui.fragment.HomePageFragment">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvHeaderName"
+            <ImageView
+                android:id="@+id/ivAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/header_name" />
+                android:layout_weight="5"
+                app:srcCompat="@drawable/ic_avatar"
+                tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tvHeaderContent"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/header_text"
-                android:textColor="@color/header_text"
-                android:textSize="@dimen/header_text"
-                tools:ignore="TextContrastCheck" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeaderName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{username}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/header_name" />
+
+                <TextView
+                    android:id="@+id/tvHeaderContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/header_text"
+                    android:textColor="@color/header_text"
+                    android:textSize="@dimen/header_text"
+                    tools:ignore="TextContrastCheck" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_search_view"
+            android:iconifiedByDefault="false"
+            android:paddingStart="-10dp"
+            android:queryBackground="@null"
+            android:queryHint="Yemek ara"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:ignore="RtlSymmetry,VisualLintBounds" />
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_search_view"
-        android:iconifiedByDefault="false"
-        android:paddingStart="-10dp"
-        android:queryBackground="@null"
-        android:queryHint="Yemek ara"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:ignore="RtlSymmetry,VisualLintBounds" />
+        <TextView
+            android:id="@+id/tvFoodCardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/food_card_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/food_card_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
-    <TextView
-        android:id="@+id/tvFoodCardTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/food_card_title"
-        android:textColor="@color/black"
-        android:textSize="@dimen/food_card_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFoodCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginEnd="11dp"
+            android:adapter="@{foodCardAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFoodCardTitle"
+            app:spanCount="1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFoodCard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginEnd="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFoodCardTitle" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
