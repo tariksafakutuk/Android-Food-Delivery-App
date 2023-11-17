@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.databinding.DataBindingUtil
 import com.example.foodie.R
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.FragmentCartBinding
@@ -21,9 +21,8 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
-        binding = FragmentCartBinding.inflate(inflater, container, false)
-
-        binding.rvCartCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart, container, false)
+        binding.cartFragment = this
 
         val cartFoodList = ArrayList<CartFood>()
         val cf1 = CartFood(1, "Ayran", "ayran", 15, 2, "tariksafakutuk")
@@ -31,27 +30,19 @@ class CartFragment : Fragment() {
         cartFoodList.add(cf1)
         cartFoodList.add(cf2)
 
-        if (cartFoodList.size == 0) {
-            binding.rvCartCard.visibility = View.GONE
-            binding.linearLayoutTotal.visibility = View.GONE
-            binding.ivCartNoData.visibility = View.VISIBLE
-            binding.tvCartNoData.visibility = View.VISIBLE
-        } else {
-            binding.rvCartCard.visibility = View.VISIBLE
-            binding.linearLayoutTotal.visibility = View.VISIBLE
-            binding.ivCartNoData.visibility = View.GONE
-            binding.tvCartNoData.visibility = View.GONE
-
-            val cartCardAdapter = CartCardAdapter(requireContext(), cartFoodList)
-            binding.rvCartCard.adapter = cartCardAdapter
-
-            binding.tvCartTotal.text = "${(cf1.foodPrice * cf1.foodQuantity) + (cf2.foodPrice * cf2.foodQuantity)} TL"
-
-            binding.buttonCartTotal.setOnClickListener {
-                Log.e("Message", "Delete cart total")
+        when (cartFoodList.size) {
+            0 -> binding.hasCartItem = false
+            else -> {
+                binding.hasCartItem = true
+                binding.cartCardAdapter = CartCardAdapter(requireContext(), cartFoodList)
+                binding.totalPrice = ((cf1.foodPrice * cf1.foodQuantity) + (cf2.foodPrice * cf2.foodQuantity)).toString()
             }
         }
 
         return binding.root
+    }
+
+    fun confirmCartTotal() {
+        Log.e("Message", "Confirm cart total")
     }
 }
