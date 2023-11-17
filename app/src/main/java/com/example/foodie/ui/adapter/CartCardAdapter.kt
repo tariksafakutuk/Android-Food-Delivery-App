@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodie.R
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.CartCardBinding
 
@@ -15,7 +17,7 @@ class CartCardAdapter(private var mContext: Context, private var cartFoodList: L
         RecyclerView.ViewHolder(design.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardCardHolder {
-        val binding = CartCardBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding: CartCardBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.cart_card, parent, false)
         return CardCardHolder(binding)
     }
 
@@ -27,9 +29,7 @@ class CartCardAdapter(private var mContext: Context, private var cartFoodList: L
             mContext.resources.getIdentifier(cartFood.foodImageName, "drawable", mContext.packageName)
         )
 
-        binding.tvCartFoodName.text = cartFood.foodName
-        binding.tvCartFoodPrice.text = "${cartFood.foodPrice} TL"
-        binding.tvQuantity.text = cartFood.foodQuantity.toString()
+        binding.cartFoodObject = cartFood
 
         binding.ivCartDelete.setOnClickListener {
             Log.e("Message", "Delete cart")
