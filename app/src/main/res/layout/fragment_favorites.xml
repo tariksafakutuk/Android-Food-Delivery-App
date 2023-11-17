@@ -1,35 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_page"
-    tools:context=".ui.fragment.FavoritesFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvFavoriteTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_page_title"
-        android:padding="15dp"
-        android:text="Favorilerim"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFavoriteCard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="11dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFavoriteTitle" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+            name="hasFavoriteItem"
+            type="Boolean" />
+
+        <variable
+            name="favoriteCardAdapter"
+            type="com.example.foodie.ui.adapter.FavoriteCardAdapter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_page"
+        tools:context=".ui.fragment.FavoritesFragment">
+
+        <TextView
+            android:id="@+id/tvFavoriteTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_page_title"
+            android:padding="15dp"
+            android:text="@string/buttom_nav_favorites"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/page_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFavoriteCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="11dp"
+            android:adapter="@{favoriteCardAdapter}"
+            android:visibility="@{hasFavoriteItem ? View.VISIBLE : View.GONE}"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavoriteTitle"
+            app:spanCount="1" />
+
+        <ImageView
+            android:id="@+id/ivFavoriteNoData"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="200dp"
+            android:src="@drawable/vc_favorite"
+            android:visibility="@{hasFavoriteItem ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavoriteTitle"
+            app:tint="@color/favorite_card_item"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvFavoriteNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Favorilerinizde ürün bulunmamaktadır."
+            android:textColor="@color/black"
+            android:textSize="@dimen/cart_no_data"
+            android:visibility="@{hasFavoriteItem ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivFavoriteNoData" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.databinding.DataBindingUtil
 import com.example.foodie.R
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.databinding.FragmentFavoritesBinding
@@ -20,9 +20,7 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
-        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-
-        binding.rvFavoriteCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
 
         val favoriteFoodList = ArrayList<FavoriteFood>()
         val f1 = FavoriteFood(1,1, "Ayran", "ayran", 15)
@@ -30,8 +28,13 @@ class FavoritesFragment : Fragment() {
         favoriteFoodList.add(f1)
         favoriteFoodList.add(f2)
 
-        val favoriteCardAdapter = FavoriteCardAdapter(requireContext(), favoriteFoodList)
-        binding.rvFavoriteCard.adapter = favoriteCardAdapter
+        when (favoriteFoodList.size) {
+            0 -> binding.hasFavoriteItem = false
+            else -> {
+                binding.hasFavoriteItem = true
+                binding.favoriteCardAdapter = FavoriteCardAdapter(requireContext(), favoriteFoodList)
+            }
+        }
 
         return binding.root
     }
