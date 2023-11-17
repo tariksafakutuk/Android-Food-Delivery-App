@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.foodie.R
+import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
 import com.example.foodie.databinding.FragmentHomePageBinding
 import com.example.foodie.datastore.LoginPref
@@ -34,12 +35,16 @@ class HomePageFragment : Fragment() {
         binding.rvFoodCard.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
         val foodCardList = ArrayList<Food>()
-        val f1 = Food(1, "Ayran", "ic_launcher", 15)
-        val f2 = Food(2, "Baklava", "ic_launcher", 15)
+        val f1 = Food(1, "Ayran", "ayran", 15)
+        val f2 = Food(2, "Baklava", "ayran", 15)
         foodCardList.add(f1)
         foodCardList.add(f2)
 
-        val foodCardAdapter = FoodCardAdapter(requireContext(), foodCardList)
+        val favoriteFoodList = ArrayList<FavoriteFood>()
+        val ff1 = FavoriteFood(1, 2, "Baklava", "ayran", 15)
+        favoriteFoodList.add(ff1)
+
+        val foodCardAdapter = FoodCardAdapter(requireContext(), foodCardList, favoriteFoodList)
         binding.rvFoodCard.adapter = foodCardAdapter
 
         return binding.root
