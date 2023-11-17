@@ -3,6 +3,7 @@ package com.example.foodie.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
@@ -22,7 +23,7 @@ class AccountCardAdapter(private var mContext: Context, private var accountCardI
         RecyclerView.ViewHolder(design.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountCardHolder {
-        val binding = AccountCardBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding: AccountCardBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.account_card, parent, false)
         return AccountCardHolder(binding)
     }
 
@@ -34,7 +35,7 @@ class AccountCardAdapter(private var mContext: Context, private var accountCardI
             mContext.resources.getIdentifier(accountCardItem.itemImageName, "drawable", mContext.packageName)
         )
 
-        binding.tvAccountCard.text = accountCardItem.itemTitle
+        binding.itemTitle = accountCardItem.itemTitle
 
         binding.cardViewAccount.setOnClickListener {
             when (position) {
