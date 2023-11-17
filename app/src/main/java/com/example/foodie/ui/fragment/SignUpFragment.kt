@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.example.foodie.R
 import com.example.foodie.databinding.FragmentSignUpBinding
@@ -24,56 +26,35 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.bg_page)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
+
+        binding.signUpFragment = this
+        binding.isSignUp = false
 
         loginPref = LoginPref(requireContext())
-
-        binding.buttonSignUp.setOnClickListener {
-            val email = binding.editTextEmailSignUp.text.toString()
-            val username = binding.editTextUsernameSignUp.text.toString()
-            val password = binding.editTextPasswordSignUp.text.toString()
-
-            if (email != "" && username != "" && password != "") {
-                clickButton(it, email, username, password)
-            } else {
-                Snackbar.make(it, "Lütfen Tüm Alanları Doldurunuz!", Snackbar.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.tvLoginClick.setOnClickListener {
-            clickTextView(it)
-        }
 
         return binding.root
     }
 
     fun clickButton(view: View, email: String, username: String, password: String) {
-        Snackbar.make(view, "Hesap Oluşturma İşlemini Onaylıyor Musunuz?", Snackbar.LENGTH_SHORT)
-            .setAction("Evet") {
-                CoroutineScope(Dispatchers.Main).launch {
-                    loginPref.createEmail(email)
-                    loginPref.createUsername(username)
-                    loginPref.createPassword(password)
+        if (email != "" && username != "" && password != "") {
+            Snackbar.make(view, "Hesap Oluşturma İşlemini Onaylıyor Musunuz?", Snackbar.LENGTH_SHORT)
+                .setAction("Evet") {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        loginPref.createEmail(email)
+                        loginPref.createUsername(username)
+                        loginPref.createPassword(password)
 
-                    binding.ivSignUp.visibility = View.GONE
-                    binding.tvSignUp.visibility = View.GONE
-                    binding.tvEmailSignUp.visibility = View.GONE
-                    binding.emailSignUpLayout.visibility = View.GONE
-                    binding.tvUsernameSignUp.visibility = View.GONE
-                    binding.usernameSignUpLayout.visibility = View.GONE
-                    binding.tvPasswordSignUp.visibility = View.GONE
-                    binding.passwordSignUpLayout.visibility = View.GONE
-                    binding.buttonSignUp.visibility = View.GONE
-                    binding.tvLoginClick.visibility = View.GONE
-                    binding.tvProgressSignUp.visibility = View.VISIBLE
-                    binding.progressBarSignUp.visibility = View.VISIBLE
-
-                    delay(2000)
-
-                    Navigation.changePage(view, R.id.action_signUpFragment_to_homePageFragment)
+                        binding.isSignUp = true
+                        delay(2000)
+                        Navigation.changePage(view, R.id.action_signUpFragment_to_homePageFragment)
+                    }
                 }
-            }
-            .show()
+                .show()
+        } else {
+            Snackbar.make(view, "Lütfen Tüm Alanları Doldurunuz!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     fun clickTextView(view: View) {
