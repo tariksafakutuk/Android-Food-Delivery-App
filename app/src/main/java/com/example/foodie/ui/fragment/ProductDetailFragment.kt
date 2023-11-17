@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.foodie.R
 import com.example.foodie.databinding.FragmentProductDetailBinding
+import com.example.foodie.utils.changePage
+import com.google.android.material.snackbar.Snackbar
 
 class ProductDetailFragment : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
@@ -26,6 +29,10 @@ class ProductDetailFragment : Fragment() {
 
         if (isFavorite) {
             binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_item))
+        }
+
+        binding.ivDetailBackButton.setOnClickListener {
+            goToPreviousPage()
         }
 
         binding.ivDetailFavoriteButton.setOnClickListener {
@@ -61,6 +68,19 @@ class ProductDetailFragment : Fragment() {
             binding.tvDetailPrice.text = "${lastQuantity * bundle.food.foodPrice} TL"
         }
 
+        binding.buttonDetailAddCart.setOnClickListener {
+            addCart(it)
+        }
+
         return binding.root
+    }
+
+    fun goToPreviousPage() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    fun addCart(view: View) {
+        Snackbar.make(view, "${bundle.food.foodName} ürünü sepete eklendi", Snackbar.LENGTH_SHORT).show()
+        Navigation.changePage(view, R.id.action_productDetailFragment_to_cartFragment)
     }
 }
