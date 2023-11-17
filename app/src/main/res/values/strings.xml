@@ -28,4 +28,6 @@
     <string name="cart_total_button">Sepeti Onayla</string>
     <string name="cart_no_data">Sepetinizde ürün bulunmamaktadır.</string>
     <string name="update_account_button">Güncelle</string>
+    <string name="product_detail_title">Ürün Detayı</string>
+    <string name="product_detail_star">4.4 (289)</string>
 </resources>
