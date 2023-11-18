@@ -1,127 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.AccountDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvAcoountDetailTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_page_title"
-        android:paddingStart="60dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="15dp"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        android:textSize="@dimen/page_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <ImageView
-        android:id="@+id/ivAccountBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/vc_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        <variable
+            name="accountDetailTitle"
+            type="String" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutCurrent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        app:boxStrokeColor="@color/bg_update_button"
-        app:endIconTint="@color/bg_update_button"
-        app:errorIconDrawable="@null"
-        app:hintTextColor="@color/bg_update_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAcoountDetailTitle"
-        tools:ignore="UnusedAttribute">
+        <variable
+            name="accountDetailFragment"
+            type="com.example.foodie.ui.fragment.AccountDetailFragment" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextCurrent"
-            android:layout_width="match_parent"
+        <variable
+            name="currentText"
+            type="String" />
+
+        <variable
+            name="isPassword"
+            type="Boolean" />
+
+        <variable
+            name="hintText"
+            type="String" />
+
+        <variable
+            name="passwordEyeDrawable"
+            type="Integer" />
+
+        <variable
+            name="isErrorEnabled"
+            type="Boolean" />
+
+        <import type="android.text.InputType" />
+
+        <import type="com.google.android.material.textfield.TextInputLayout" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.AccountDetailFragment">
+
+        <TextView
+            android:id="@+id/tvAcoountDetailTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:background="@drawable/bg_page_title"
+            android:paddingStart="60dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="15dp"
+            android:text="@{accountDetailTitle}"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/page_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutNew"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        app:boxStrokeColor="@color/bg_update_button"
-        app:endIconTint="@color/bg_update_button"
-        app:errorIconDrawable="@null"
-        app:hintTextColor="@color/bg_update_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutCurrent"
-        tools:ignore="UnusedAttribute">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNew"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivAccountBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{() -> accountDetailFragment.goToPreviousPage()}"
+            android:src="@drawable/vc_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutAgainNew"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        app:boxStrokeColor="@color/bg_update_button"
-        app:endIconTint="@color/bg_update_button"
-        app:errorIconDrawable="@null"
-        app:hintTextColor="@color/bg_update_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutNew"
-        tools:ignore="UnusedAttribute">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextAgainNew"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutCurrent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:enabled="@{isPassword}"
+            android:hint='@{"Mevcut " + hintText}'
+            app:boxStrokeColor="@color/bg_update_button"
+            app:endIconDrawable="@{passwordEyeDrawable}"
+            app:endIconMode="@{isPassword ? TextInputLayout.END_ICON_PASSWORD_TOGGLE : TextInputLayout.END_ICON_NONE}"
+            app:endIconTint="@color/bg_update_button"
+            app:errorEnabled="@{isErrorEnabled}"
+            app:errorIconDrawable="@null"
+            app:hintTextColor="@color/bg_update_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAcoountDetailTitle"
+            tools:ignore="UnusedAttribute">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCurrent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="@{isPassword ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT}"
+                android:onTextChanged="@{() -> accountDetailFragment.errorDisable()}"
+                android:text="@{currentText}"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/buttonUpdateAccount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_update_button"
-        android:text="@string/update_account_button"
-        android:textColor="@color/white"
-        android:textSize="@dimen/update_account_button"
-        app:backgroundTint="@color/bg_update_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutAgainNew"
-        tools:ignore="TextContrastCheck" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint='@{"Yeni " + hintText}'
+            app:boxStrokeColor="@color/bg_update_button"
+            app:endIconDrawable="@{passwordEyeDrawable}"
+            app:endIconMode="@{isPassword ? TextInputLayout.END_ICON_PASSWORD_TOGGLE : TextInputLayout.END_ICON_NONE}"
+            app:endIconTint="@color/bg_update_button"
+            app:errorEnabled="@{isErrorEnabled}"
+            app:errorIconDrawable="@null"
+            app:hintTextColor="@color/bg_update_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutCurrent"
+            tools:ignore="UnusedAttribute">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="@{isPassword ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT}"
+                android:onTextChanged="@{() -> accountDetailFragment.errorDisable()}"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAgainNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint='@{"Tekrar Yeni " + hintText}'
+            app:boxStrokeColor="@color/bg_update_button"
+            app:endIconDrawable="@{passwordEyeDrawable}"
+            app:endIconMode="@{isPassword ? TextInputLayout.END_ICON_PASSWORD_TOGGLE : TextInputLayout.END_ICON_NONE}"
+            app:endIconTint="@color/bg_update_button"
+            app:errorEnabled="@{isErrorEnabled}"
+            app:errorIconDrawable="@null"
+            app:hintTextColor="@color/bg_update_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutNew"
+            tools:ignore="UnusedAttribute">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAgainNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="@{isPassword ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD : InputType.TYPE_CLASS_TEXT}"
+                android:onTextChanged="@{() -> accountDetailFragment.errorDisable()}"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonUpdateAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_update_button"
+            android:onClick="@{() -> accountDetailFragment.updateAccount(buttonUpdateAccount)}"
+            android:text="@string/update_account_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/update_account_button"
+            app:backgroundTint="@color/bg_update_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutAgainNew"
+            tools:ignore="TextContrastCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
