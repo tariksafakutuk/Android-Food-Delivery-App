@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.bundles.android.navigation)
     implementation(libs.bundles.android.datastore)
     api(libs.bundles.kotlin.coroutines)
+    implementation(libs.bundles.android.viewmodel)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }

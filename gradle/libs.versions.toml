@@ -11,10 +11,11 @@ material = "1.10.0"
 # Navigation
 androidxNavigation = "2.7.5"
 
-# DataStore
+# DataStore - ViewModel
 androidxDataStore = "1.0.0"
-androidxLifecycle = "2.6.2"
 kotlinxCoroutines = "1.7.1"
+androidxLifecycle = "2.6.2"
+androidxActivity = "1.8.1"
 
 # Test
 junit4 = "4.13.2"
@@ -37,6 +38,10 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+
+# ViewModel
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -61,6 +66,10 @@ android-datastore = [
 kotlin-coroutines = [
     "kotlinx-coroutines-core",
     "kotlinx-coroutines-android"
+]
+android-viewmodel = [
+    "androidx-lifecycle-viewmodel",
+    "androidx-activity"
 ]
 unit-test = [
     "junit4"
