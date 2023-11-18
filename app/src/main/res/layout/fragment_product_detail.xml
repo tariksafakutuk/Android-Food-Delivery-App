@@ -1,235 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_page"
-    tools:context=".ui.fragment.ProductDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvDetailTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_page_title"
-        android:padding="15dp"
-        android:text="@string/product_detail_title"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/page_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <ImageView
-        android:id="@+id/ivDetailFavoriteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:src="@drawable/vc_favorite"
-        app:tint="@color/product_detail_favorite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        <variable
+            name="productDetailFragment"
+            type="com.example.foodie.ui.fragment.ProductDetailFragment" />
 
-    <ImageView
-        android:id="@+id/ivDetailBackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/vc_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        <variable
+            name="cartFoodObject"
+            type="com.example.foodie.data.entity.CartFood" />
+    </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="32dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailTitle">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_page"
+        tools:context=".ui.fragment.ProductDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_food_card">
-
-            <ImageView
-                android:id="@+id/ivDetailFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ayran"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tvDetailFoodName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black"
-        android:textSize="@dimen/product_detail_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <ImageView
-        android:id="@+id/ivDetailStar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/vc_star"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailFoodName"
-        app:tint="@color/product_detail_star"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-    <TextView
-        android:id="@+id/tvDetailStar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/product_detail_star"
-        android:textSize="@dimen/product_detail_item"
-        app:layout_constraintBottom_toBottomOf="@+id/ivDetailStar"
-        app:layout_constraintStart_toEndOf="@+id/ivDetailStar"
-        app:layout_constraintTop_toTopOf="@+id/ivDetailStar" />
-
-    <ImageView
-        android:id="@+id/ivDetailTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/vc_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivDetailStar"
-        app:tint="@color/product_detail_item"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
-
-    <TextView
-        android:id="@+id/tvDetailTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/time_text"
-        android:textSize="@dimen/product_detail_item"
-        app:layout_constraintBottom_toBottomOf="@+id/ivDetailTime"
-        app:layout_constraintStart_toEndOf="@+id/ivDetailTime"
-        app:layout_constraintTop_toTopOf="@+id/ivDetailTime" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_quantity"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvDetailFoodName">
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_page_title"
+            android:padding="15dp"
+            android:text="@string/product_detail_title"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/page_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivDetailDecrease"
+            android:id="@+id/ivDetailBackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/vc_decrease"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{() -> productDetailFragment.goToPreviousPage()}"
+            android:src="@drawable/vc_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/ivDetailFavoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{() -> productDetailFragment.changeFavoriteColor()}"
+            android:src="@drawable/vc_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="32dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailTitle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_food_card">
+
+                <ImageView
+                    android:id="@+id/ivDetailFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ayran"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvDetailFoodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@{cartFoodObject.foodName}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/product_detail_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+        <ImageView
+            android:id="@+id/ivDetailStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/vc_star"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailFoodName"
+            app:tint="@color/product_detail_star"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvDetailStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/product_detail_star"
+            android:textSize="@dimen/product_detail_item"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetailStar"
+            app:layout_constraintStart_toEndOf="@+id/ivDetailStar"
+            app:layout_constraintTop_toTopOf="@+id/ivDetailStar" />
+
+        <ImageView
+            android:id="@+id/ivDetailTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/vc_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetailStar"
             app:tint="@color/product_detail_item"
             tools:ignore="ContentDescription,ImageContrastCheck" />
 
         <TextView
-            android:id="@+id/tvDetailQuantity"
+            android:id="@+id/tvDetailTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:textColor="@color/product_detail_item"
-            android:textSize="@dimen/product_detail_price" />
+            android:layout_marginStart="8dp"
+            android:text="@string/time_text"
+            android:textSize="@dimen/product_detail_item"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetailTime"
+            app:layout_constraintStart_toEndOf="@+id/ivDetailTime"
+            app:layout_constraintTop_toTopOf="@+id/ivDetailTime" />
 
-        <ImageView
-            android:id="@+id/ivDetailIncrease"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:src="@drawable/vc_increase"
-            app:tint="@color/product_detail_item"
-            tools:ignore="ContentDescription,ImageContrastCheck" />
-    </LinearLayout>
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_quantity"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvDetailFoodName">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_cart_total"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tvDetailPrice"
+            <ImageView
+                android:id="@+id/ivDetailDecrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-medium"
+                android:layout_weight="1"
+                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Decrease")}'
+                android:src="@drawable/vc_decrease"
+                app:tint="@color/product_detail_item"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+
+            <TextView
+                android:id="@+id/tvDetailQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:text="@{Integer.toString(cartFoodObject.foodQuantity)}"
                 android:textColor="@color/product_detail_item"
-                android:textSize="@dimen/product_detail_item"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/product_detail_price" />
 
-            <TextView
-                android:id="@+id/tvDetailCargo"
+            <ImageView
+                android:id="@+id/ivDetailIncrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/cart_total_cargo"
-                android:textColor="@color/cart_total_cargo"
-                android:textSize="@dimen/cart_total_cargo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetailPrice"
-                tools:ignore="TextContrastCheck" />
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Increase")}'
+                android:src="@drawable/vc_increase"
+                app:tint="@color/product_detail_item"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonDetailAddCart"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_cart_button"
-                android:paddingStart="60dp"
-                android:paddingEnd="60dp"
-                android:text="@string/cart_button_text"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:backgroundTint="@color/product_detail_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TouchTargetSizeCheck" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_cart_total"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvDetailPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text='@{Integer.toString(cartFoodObject.foodPrice) + " TL"}'
+                    android:textColor="@color/product_detail_item"
+                    android:textSize="@dimen/product_detail_item"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvDetailCargo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/cart_total_cargo"
+                    android:textColor="@color/cart_total_cargo"
+                    android:textSize="@dimen/cart_total_cargo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetailPrice"
+                    tools:ignore="TextContrastCheck" />
+
+                <Button
+                    android:id="@+id/buttonDetailAddCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_cart_button"
+                    android:onClick="@{() -> productDetailFragment.addCart(buttonDetailAddCart, cartFoodObject)}"
+                    android:paddingStart="60dp"
+                    android:paddingEnd="60dp"
+                    android:text="@string/cart_button_text"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/product_detail_item"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

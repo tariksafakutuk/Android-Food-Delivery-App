@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.foodie.R
+import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.FragmentProductDetailBinding
 import com.example.foodie.utils.changePage
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +25,8 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
-        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail, container, false)
+        binding.productDetailFragment = this
 
         isFavorite = bundle.isFavorite
 
@@ -31,46 +34,11 @@ class ProductDetailFragment : Fragment() {
             binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_item))
         }
 
-        binding.ivDetailBackButton.setOnClickListener {
-            goToPreviousPage()
-        }
-
-        binding.ivDetailFavoriteButton.setOnClickListener {
-            if (isFavorite) {
-                binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_favorite))
-            } else {
-                binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_item))
-            }
-
-            isFavorite = !isFavorite
-        }
-
         binding.ivDetailFood.setImageResource(
             resources.getIdentifier(bundle.food.foodImageName, "drawable", requireContext().packageName)
         )
 
-        binding.tvDetailFoodName.text = bundle.food.foodName
-        binding.tvDetailPrice.text = "${bundle.food.foodPrice} TL"
-        binding.tvDetailQuantity.text = "1"
-
-        binding.ivDetailDecrease.setOnClickListener {
-            var lastQuantity = binding.tvDetailQuantity.text.toString().toInt()
-            if (lastQuantity != 1) {
-                lastQuantity -= 1
-                binding.tvDetailQuantity.text = lastQuantity.toString()
-                binding.tvDetailPrice.text = "${lastQuantity * bundle.food.foodPrice} TL"
-            }
-        }
-
-        binding.ivDetailIncrease.setOnClickListener {
-            val lastQuantity = binding.tvDetailQuantity.text.toString().toInt() + 1
-            binding.tvDetailQuantity.text = (lastQuantity).toString()
-            binding.tvDetailPrice.text = "${lastQuantity * bundle.food.foodPrice} TL"
-        }
-
-        binding.buttonDetailAddCart.setOnClickListener {
-            addCart(it)
-        }
+        binding.cartFoodObject = CartFood(1, bundle.food.foodName, bundle.food.foodImageName, bundle.food.foodPrice, 1, "test")
 
         return binding.root
     }
@@ -79,8 +47,39 @@ class ProductDetailFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
-    fun addCart(view: View) {
-        Snackbar.make(view, "${bundle.food.foodName} ürünü sepete eklendi", Snackbar.LENGTH_SHORT).show()
+    fun changeFavoriteColor() {
+        if (isFavorite) {
+            binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_favorite))
+        } else {
+            binding.ivDetailFavoriteButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.product_detail_item))
+        }
+
+        isFavorite = !isFavorite
+    }
+
+    fun foodQuantityChange(action: String) {
+        val cardFoodObject = binding.cartFoodObject
+
+        if (cardFoodObject != null) {
+            when (action) {
+                "Decrease" -> {
+                    if (cardFoodObject.foodQuantity != 1) {
+                        cardFoodObject.foodQuantity -= 1
+                    }
+                }
+
+                "Increase" -> {
+                    cardFoodObject.foodQuantity += 1
+                }
+            }
+            cardFoodObject.foodPrice = cardFoodObject.foodQuantity * bundle.food.foodPrice
+            binding.cartFoodObject = cardFoodObject
+            binding.invalidateAll()
+        }
+    }
+
+    fun addCart(view: View, cartFoodObject: CartFood) {
+        Snackbar.make(view, "${cartFoodObject.foodName} ürünü sepete eklendi", Snackbar.LENGTH_SHORT).show()
         Navigation.changePage(view, R.id.action_productDetailFragment_to_cartFragment)
     }
 }
