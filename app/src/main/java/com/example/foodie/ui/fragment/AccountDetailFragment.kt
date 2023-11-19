@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.foodie.R
 import com.example.foodie.databinding.FragmentAccountDetailBinding
 import com.example.foodie.datastore.LoginPref
+import com.example.foodie.ui.viewmodel.AccountDetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +21,7 @@ class AccountDetailFragment : Fragment() {
     private lateinit var binding: FragmentAccountDetailBinding
     private lateinit var loginPref: LoginPref
     private val bundle: AccountDetailFragmentArgs by navArgs()
+    private lateinit var viewModel: AccountDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,54 +50,61 @@ class AccountDetailFragment : Fragment() {
             }
         }
 
-        return binding.root
-    }
-
-    fun updateAccount(view: View) {
-        when (bundle.action) {
-            "email" -> {
-                if (binding.editTextNew.text.toString() == "") {
-                    binding.layoutNew.error = "Yeni email adresinizi girmelisiniz"
-                } else if (binding.editTextNew.text.toString() == binding.editTextAgainNew.text.toString()) {
-                    Snackbar.make(view, "Email adresinizi değiştirmek istediğinize emin misiniz?", Snackbar.LENGTH_SHORT)
+        viewModel.updateStatus.observe(viewLifecycleOwner) { updateStatus ->
+            when (updateStatus[0]) {
+                "email" -> {
+                    Snackbar.make(binding.tvAcoountDetailTitle, "Email adresinizi değiştirmek istediğinize emin misiniz?", Snackbar.LENGTH_SHORT)
                         .setAction("Evet") {
                             CoroutineScope(Dispatchers.Main).launch {
-                                loginPref.createEmail(binding.editTextNew.text.toString())
-                                Snackbar.make(view, "Email adresiniz başarılı bir şekilde değiştirildi", Snackbar.LENGTH_SHORT).show()
+                                viewModel.updateAccount(updateStatus)
+                                loginPref.createEmail(updateStatus[1])
+                                Snackbar.make(binding.tvAcoountDetailTitle, "Email adresiniz başarılı bir şekilde değiştirildi", Snackbar.LENGTH_SHORT).show()
                                 goToPreviousPage()
                             }
                         }
                         .show()
-                } else {
-                    binding.layoutAgainNew.error = "Girilen email bilgisi Yeni Email alanındakiyle aynı olmalıdır"
                 }
-            }
 
-            "password" -> {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val password = loginPref.readPassword()
-
-                    if (binding.editTextCurrent.text.toString() == "") {
-                        binding.layoutCurrent.error = "Mevcut şifrenizi girmelisiniz"
-                    } else if (binding.editTextCurrent.text.toString() != password) {
-                        binding.layoutCurrent.error = "Girilen şifre bilgisi yanlış"
-                    } else if (binding.editTextNew.text.toString() == "") {
-                        binding.layoutNew.error = "Yeni şifrenizi girmelisiniz"
-                    } else if (binding.editTextNew.text.toString() == binding.editTextAgainNew.text.toString()) {
-                        Snackbar.make(view, "Şifrenizi değiştirmek istediğinize emin misiniz?", Snackbar.LENGTH_SHORT)
-                            .setAction("Evet") {
-                                CoroutineScope(Dispatchers.Main).launch {
-                                    loginPref.createPassword(binding.editTextNew.text.toString())
-                                    Snackbar.make(view, "Şifreniz başarılı bir şekilde değiştirildi", Snackbar.LENGTH_SHORT).show()
-                                    goToPreviousPage()
-                                }
+                "password" -> {
+                    Snackbar.make(binding.tvAcoountDetailTitle, "Şifrenizi değiştirmek istediğinize emin misiniz?", Snackbar.LENGTH_SHORT)
+                        .setAction("Evet") {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                viewModel.updateAccount(updateStatus)
+                                loginPref.createPassword(updateStatus[1])
+                                Snackbar.make(binding.tvAcoountDetailTitle, "Şifreniz başarılı bir şekilde değiştirildi", Snackbar.LENGTH_SHORT).show()
+                                goToPreviousPage()
                             }
-                            .show()
-                    } else {
-                        binding.layoutAgainNew.error = "Girilen şifreniz Yeni Şifre alanındakiyle aynı olmalıdır"
-                    }
+                        }
+                        .show()
                 }
             }
+        }
+
+        viewModel.currentTextError.observe(viewLifecycleOwner) {
+            binding.layoutCurrent.error = it
+        }
+
+        viewModel.newTextError.observe(viewLifecycleOwner) {
+            binding.layoutNew.error = it
+        }
+
+        viewModel.againNewTextError.observe(viewLifecycleOwner) {
+            binding.layoutAgainNew.error = it
+        }
+
+        return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val tempViewModel: AccountDetailViewModel by viewModels()
+        viewModel = tempViewModel
+    }
+
+    fun updateAccount(currentText: String, newText: String, againNewText: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val password = loginPref.readPassword()
+            viewModel.checkUpdate(bundle.action, currentText, newText, againNewText, password)
         }
     }
 
