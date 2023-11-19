@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.foodie.R
-import com.example.foodie.data.entity.AccountCardItem
 import com.example.foodie.databinding.FragmentAccountBinding
 import com.example.foodie.ui.adapter.AccountCardAdapter
+import com.example.foodie.ui.viewmodel.AccountViewModel
 
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
+    private lateinit var viewModel: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,16 +24,16 @@ class AccountFragment : Fragment() {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false)
 
-        val accountCardItemList = ArrayList<AccountCardItem>()
-        val a1 = AccountCardItem("vc_email", "Email Değişikliği")
-        val a2 = AccountCardItem("vc_password", "Şifre Değişikliği")
-        val a3 = AccountCardItem("vc_logout", "Çıkış")
-        accountCardItemList.add(a1)
-        accountCardItemList.add(a2)
-        accountCardItemList.add(a3)
-
-        binding.accountCardAdapter = AccountCardAdapter(requireContext(), accountCardItemList)
+        viewModel.accountCardList.observe(viewLifecycleOwner) {
+            binding.accountCardAdapter = AccountCardAdapter(requireContext(), it)
+        }
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val tempViewModel: AccountViewModel by viewModels()
+        viewModel = tempViewModel
     }
 }
