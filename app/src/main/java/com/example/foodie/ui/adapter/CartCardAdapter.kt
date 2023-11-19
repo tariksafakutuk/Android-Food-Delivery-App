@@ -1,7 +1,6 @@
 package com.example.foodie.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,9 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.CartCardBinding
+import com.example.foodie.ui.viewmodel.CartViewModel
 
-class CartCardAdapter(private var mContext: Context, private var cartFoodList: List<CartFood>) :
-    RecyclerView.Adapter<CartCardAdapter.CardCardHolder>() {
+class CartCardAdapter(
+    private var mContext: Context,
+    private var cartFoodList: List<CartFood>,
+    private var viewModel: CartViewModel,
+    private var username: String
+) : RecyclerView.Adapter<CartCardAdapter.CardCardHolder>() {
 
     inner class CardCardHolder(var design: CartCardBinding) :
         RecyclerView.ViewHolder(design.root)
@@ -32,15 +36,15 @@ class CartCardAdapter(private var mContext: Context, private var cartFoodList: L
         binding.cartFoodObject = cartFood
 
         binding.ivCartDelete.setOnClickListener {
-            Log.e("Message", "Delete cart")
+            viewModel.deleteCartFood(cartFood.cartFoodId, username)
         }
 
         binding.ivDecrease.setOnClickListener {
-            Log.e("Message", "Decrease quantity")
+            viewModel.quantityAction("Decrease", cartFood.cartFoodId, username)
         }
 
         binding.ivIncrease.setOnClickListener {
-            Log.e("Message", "Increase quantity")
+            viewModel.quantityAction("Increase", cartFood.cartFoodId, username)
         }
     }
 
