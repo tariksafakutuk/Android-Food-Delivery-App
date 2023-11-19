@@ -1,9 +1,9 @@
 package com.example.foodie.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
@@ -11,16 +11,21 @@ import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
 import com.example.foodie.databinding.FoodCardBinding
 import com.example.foodie.ui.fragment.HomePageFragmentDirections
+import com.example.foodie.ui.viewmodel.HomePageViewModel
 import com.example.foodie.utils.changePage
 
-class FoodCardAdapter(private var mContext: Context, private var foodList: List<Food>, private var favoriteFoodList: List<FavoriteFood>) :
-    RecyclerView.Adapter<FoodCardAdapter.FoodCardHolder>() {
+class FoodCardAdapter(
+    private var mContext: Context,
+    private var foodList: List<Food>,
+    private var favoriteFoodList: List<FavoriteFood>,
+    private var viewModel: HomePageViewModel
+) : RecyclerView.Adapter<FoodCardAdapter.FoodCardHolder>() {
 
     inner class FoodCardHolder(var design: FoodCardBinding) :
         RecyclerView.ViewHolder(design.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardHolder {
-        val binding = FoodCardBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding: FoodCardBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.food_card, parent, false)
         return FoodCardHolder(binding)
     }
 
@@ -48,7 +53,7 @@ class FoodCardAdapter(private var mContext: Context, private var foodList: List<
         }
 
         binding.ivFavoriteButton.setOnClickListener {
-            Log.e("Message", "Add favorite")
+            viewModel.setFavorite(food.foodId)
         }
 
         binding.foodCard.setOnClickListener {
