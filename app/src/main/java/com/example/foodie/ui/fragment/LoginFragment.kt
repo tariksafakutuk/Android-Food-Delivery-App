@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
                         loginPref.createEmail(it[0])
                         loginPref.createUsername(it[1])
                         loginPref.createPassword(it[2])
+                        viewModel.loginStatus.value = "login"
                     }
                 }
             }

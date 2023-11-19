@@ -1,10 +1,14 @@
 package com.example.foodie.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.foodie.data.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AccountDetailViewModel: ViewModel() {
+    private val userRepo = UserRepository()
     val updateStatus = MutableLiveData<List<String>>()
     val currentTextError = MutableLiveData<String>()
     val newTextError = MutableLiveData<String>()
@@ -45,14 +49,8 @@ class AccountDetailViewModel: ViewModel() {
     }
 
     fun updateAccount(updateStatus: List<String>) {
-        when (updateStatus[0]) {
-            "email" -> {
-                Log.e("Message", "Update account email")
-            }
-
-            "password" -> {
-                Log.e("Message", "Update account password")
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+            userRepo.updateAccount(updateStatus)
         }
     }
 }

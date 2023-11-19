@@ -2,8 +2,13 @@ package com.example.foodie.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.foodie.data.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginViewModel(): ViewModel() {
+    private val userRepo = UserRepository()
     val loginStatus = MutableLiveData<String>()
     val userData = MutableLiveData<List<String>>()
 
@@ -12,23 +17,14 @@ class LoginViewModel(): ViewModel() {
     }
 
     fun isLoginCheck(email: String, username: String, password: String) {
-        if ((email == "test@gmail.com" || username == "test") && password == "1234") {
-            loginStatus.value = "login"
-        } else {
-            loginStatus.value = "loginFailed"
+        CoroutineScope(Dispatchers.Main).launch {
+            loginStatus.value = userRepo.isLoginCheck(email, username, password)
         }
     }
 
     fun login(account: String, password: String) {
-        if (account == "test@gmail.com" || account == "test") {
-            if (password == "1234") {
-                userData.value = arrayListOf("test@gmail.com", "test", "1234")
-                loginStatus.value = "login"
-            } else {
-                userData.value = arrayListOf("passwordFailed")
-            }
-        } else {
-            userData.value = arrayListOf("accountFailed")
+        CoroutineScope(Dispatchers.Main).launch {
+            userData.value = userRepo.login(account, password)
         }
     }
 }
