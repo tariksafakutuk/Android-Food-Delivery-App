@@ -1,21 +1,21 @@
 package com.example.foodie.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.R
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.databinding.FavoriteCardBinding
 import com.example.foodie.ui.fragment.FavoritesFragmentDirections
-import com.example.foodie.utils.changePage
+import com.example.foodie.ui.viewmodel.FavoritesViewModel
 
 class FavoriteCardAdapter(
     private var mContext: Context,
-    private var favoriteFoodList: List<FavoriteFood>
+    private var favoriteFoodList: List<FavoriteFood>,
+    private var viewModel: FavoritesViewModel,
+    private var username: String
 ) : RecyclerView.Adapter<FavoriteCardAdapter.FavoriteCardHolder>() {
 
     inner class FavoriteCardHolder(var design: FavoriteCardBinding) :
@@ -37,11 +37,11 @@ class FavoriteCardAdapter(
         binding.favoriteFoodObject = favoriteFood
 
         binding.ivFavoriteButton.setOnClickListener {
-            Log.e("Message", "Delete favorite food")
+            viewModel.deleteFavoriteFood(favoriteFood.favoriteFoodId)
         }
 
         binding.buttonFavoritesCart.setOnClickListener {
-            Navigation.changePage(it, R.id.action_favoritesFragment_to_cartFragment)
+            viewModel.addFavoritesFoodToCart(favoriteFood, username)
         }
     }
 
