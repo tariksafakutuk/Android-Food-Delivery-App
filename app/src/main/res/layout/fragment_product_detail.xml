@@ -79,7 +79,6 @@
                     android:id="@+id/ivDetailFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ayran"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Decrease")}'
+                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Decrease", cartFoodObject)}'
                 android:src="@drawable/vc_decrease"
                 app:tint="@color/product_detail_item"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
@@ -184,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Increase")}'
+                android:onClick='@{() -> productDetailFragment.foodQuantityChange("Increase", cartFoodObject)}'
                 android:src="@drawable/vc_increase"
                 app:tint="@color/product_detail_item"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
@@ -238,7 +237,7 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/bg_cart_button"
-                    android:onClick="@{() -> productDetailFragment.addCart(buttonDetailAddCart, cartFoodObject)}"
+                    android:onClick="@{() -> productDetailFragment.addCart(cartFoodObject)}"
                     android:paddingStart="60dp"
                     android:paddingEnd="60dp"
                     android:text="@string/cart_button_text"
