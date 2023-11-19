@@ -175,7 +175,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/bg_update_button"
-            android:onClick="@{() -> accountDetailFragment.updateAccount(buttonUpdateAccount)}"
+            android:onClick="@{() -> accountDetailFragment.updateAccount(editTextCurrent.getText().toString(), editTextNew.getText().toString(), editTextAgainNew.getText().toString())}"
             android:text="@string/update_account_button"
             android:textColor="@color/white"
             android:textSize="@dimen/update_account_button"
