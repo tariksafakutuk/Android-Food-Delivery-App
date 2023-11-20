@@ -7,7 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.foodie.R
 import com.example.foodie.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
-                R.id.loginFragment, R.id.signUpFragment -> binding.bottomNavigationView.visibility = View.GONE
+                R.id.loginFragment, R.id.signUpFragment, R.id.productDetailFragment -> binding.bottomNavigationView.visibility = View.GONE
                 else -> binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }

@@ -5,9 +5,7 @@ import com.example.foodie.data.entity.CartFood
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
 
-class FoodRepository {
-    private val fds = FoodDataSource()
-
+class FoodRepository(var fds: FoodDataSource) {
     suspend fun loadFood(): HashMap<String, List<Any>> = fds.loadFood()
 
     suspend fun searchFood(searchQuery: String, foodList: List<Food>, favoriteFoodList: List<FavoriteFood>): HashMap<String, List<Any>> =

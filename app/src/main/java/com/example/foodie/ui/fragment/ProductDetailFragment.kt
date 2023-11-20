@@ -17,16 +17,19 @@ import com.example.foodie.datastore.LoginPref
 import com.example.foodie.ui.viewmodel.ProductDetailViewModel
 import com.example.foodie.utils.changePage
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProductDetailFragment : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
     private val bundle: ProductDetailFragmentArgs by navArgs()
     private var isFavorite = false
     private lateinit var viewModel: ProductDetailViewModel
-    private lateinit var loginPref: LoginPref
+    @Inject lateinit var loginPref: LoginPref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +38,6 @@ class ProductDetailFragment : Fragment() {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail, container, false)
         binding.productDetailFragment = this
-
-        loginPref = LoginPref(requireContext())
 
         isFavorite = bundle.isFavorite
 

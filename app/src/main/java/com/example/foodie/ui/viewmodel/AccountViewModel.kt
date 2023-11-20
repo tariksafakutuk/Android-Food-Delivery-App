@@ -3,23 +3,25 @@ package com.example.foodie.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.AccountCardItem
+import com.example.foodie.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AccountViewModel: ViewModel() {
-    val accountCardList = MutableLiveData<List<AccountCardItem>>()
+@HiltViewModel
+class AccountViewModel @Inject constructor(var userRepo: UserRepository): ViewModel() {
+    private val _accountCardList = MutableLiveData<List<AccountCardItem>>()
+    val accountCardList: MutableLiveData<List<AccountCardItem>> = _accountCardList
 
     init {
         loadAccountCard()
     }
 
     fun loadAccountCard() {
-        val accountCardItemList = ArrayList<AccountCardItem>()
-        val a1 = AccountCardItem("vc_email", "Email Değişikliği")
-        val a2 = AccountCardItem("vc_password", "Şifre Değişikliği")
-        val a3 = AccountCardItem("vc_logout", "Çıkış")
-        accountCardItemList.add(a1)
-        accountCardItemList.add(a2)
-        accountCardItemList.add(a3)
-
-        accountCardList.value = accountCardItemList
+        CoroutineScope(Dispatchers.Main).launch {
+            _accountCardList.value = userRepo.loadAccountCard()
+        }
     }
 }

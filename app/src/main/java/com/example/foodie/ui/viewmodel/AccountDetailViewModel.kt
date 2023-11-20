@@ -3,46 +3,55 @@ package com.example.foodie.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AccountDetailViewModel: ViewModel() {
-    private val userRepo = UserRepository()
-    val updateStatus = MutableLiveData<List<String>>()
-    val currentTextError = MutableLiveData<String>()
-    val newTextError = MutableLiveData<String>()
-    val againNewTextError = MutableLiveData<String>()
+@HiltViewModel
+class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository): ViewModel() {
+    private val _updateStatus = MutableLiveData<List<String>>()
+    val updateStatus: MutableLiveData<List<String>> = _updateStatus
+
+    private val _currentTextError = MutableLiveData<String>()
+    val currentTextError: MutableLiveData<String> = _currentTextError
+
+    private val _newTextError = MutableLiveData<String>()
+    val newTextError: MutableLiveData<String> = _newTextError
+
+    private val _againNewTextError = MutableLiveData<String>()
+    val againNewTextError: MutableLiveData<String> = _againNewTextError
 
     fun checkUpdate(action: String, currentText: String, newText: String, againNewText: String, password: String) {
         when (action) {
             "email" -> {
                 when (newText) {
                     "" -> {
-                        newTextError.value = "Yeni email adresinizi girmelisiniz"
+                        _newTextError.value = "Yeni email adresinizi girmelisiniz"
                     }
 
                     againNewText -> {
-                        updateStatus.value = arrayListOf("email", newText)
+                        _updateStatus.value = arrayListOf("email", newText)
                     }
 
                     else -> {
-                        againNewTextError.value = "Girilen email bilgisi Yeni Email alanındakiyle aynı olmalıdır"
+                        _againNewTextError.value = "Girilen email bilgisi Yeni Email alanındakiyle aynı olmalıdır"
                     }
                 }
             }
 
             "password" -> {
                 if (currentText == "") {
-                    currentTextError.value = "Mevcut şifrenizi girmelisiniz"
+                    _currentTextError.value = "Mevcut şifrenizi girmelisiniz"
                 } else if (currentText != password) {
-                    currentTextError.value = "Girilen şifre bilgisi yanlış"
+                    _currentTextError.value = "Girilen şifre bilgisi yanlış"
                 } else if (newText == "") {
-                    newTextError.value = "Yeni şifrenizi girmelisiniz"
+                    _newTextError.value = "Yeni şifrenizi girmelisiniz"
                 } else if (newText == againNewText) {
-                    updateStatus.value = arrayListOf("password", newText)
+                    _updateStatus.value = arrayListOf("password", newText)
                 } else {
-                    againNewTextError.value = "Girilen şifreniz Yeni Şifre alanındakiyle aynı olmalıdır"
+                    _againNewTextError.value = "Girilen şifreniz Yeni Şifre alanındakiyle aynı olmalıdır"
                 }
             }
         }

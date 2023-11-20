@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.data.repository.FoodRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CartViewModel: ViewModel() {
-    private val foodRepo = FoodRepository()
-
+@HiltViewModel
+class CartViewModel @Inject constructor(var foodRepo: FoodRepository): ViewModel() {
     private val _cartFoodCardList = MutableLiveData<List<CartFood>>()
     val cartFoodCardList: MutableLiveData<List<CartFood>> = _cartFoodCardList
 

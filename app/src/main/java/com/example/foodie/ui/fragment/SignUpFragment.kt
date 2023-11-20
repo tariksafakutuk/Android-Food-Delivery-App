@@ -15,14 +15,17 @@ import com.example.foodie.datastore.LoginPref
 import com.example.foodie.ui.viewmodel.SignUpViewModel
 import com.example.foodie.utils.changePage
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var loginPref: LoginPref
+    @Inject lateinit var loginPref: LoginPref
     private lateinit var viewModel: SignUpViewModel
 
     override fun onCreateView(
@@ -34,8 +37,6 @@ class SignUpFragment : Fragment() {
 
         binding.signUpFragment = this
         binding.isSignUp = false
-
-        loginPref = LoginPref(requireContext())
 
         viewModel.userData.observe(viewLifecycleOwner) { userData ->
             when (userData[0]) {

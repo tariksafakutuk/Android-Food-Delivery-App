@@ -13,13 +13,16 @@ import com.example.foodie.databinding.FragmentAccountDetailBinding
 import com.example.foodie.datastore.LoginPref
 import com.example.foodie.ui.viewmodel.AccountDetailViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AccountDetailFragment : Fragment() {
     private lateinit var binding: FragmentAccountDetailBinding
-    private lateinit var loginPref: LoginPref
+    @Inject lateinit var loginPref: LoginPref
     private val bundle: AccountDetailFragmentArgs by navArgs()
     private lateinit var viewModel: AccountDetailViewModel
 
@@ -29,8 +32,6 @@ class AccountDetailFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_detail, container, false)
         binding.accountDetailFragment = this
-
-        loginPref = LoginPref(requireContext())
 
         when (bundle.action) {
             "email" -> {

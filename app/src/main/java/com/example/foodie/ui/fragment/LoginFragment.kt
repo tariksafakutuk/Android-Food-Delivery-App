@@ -15,14 +15,17 @@ import com.example.foodie.datastore.LoginPref
 import com.example.foodie.ui.viewmodel.LoginViewModel
 import com.example.foodie.utils.changePage
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var loginPref: LoginPref
+    @Inject lateinit var loginPref: LoginPref
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
@@ -32,8 +35,6 @@ class LoginFragment : Fragment() {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.bg_page)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         binding.loginFragment = this
-
-        loginPref = LoginPref(requireContext())
 
         CoroutineScope(Dispatchers.Main).launch {
             val email = loginPref.readEmail()

@@ -15,13 +15,16 @@ import com.example.foodie.datastore.LoginPref
 import com.example.foodie.ui.adapter.FavoriteCardAdapter
 import com.example.foodie.ui.viewmodel.FavoritesViewModel
 import com.example.foodie.utils.changePage
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     private lateinit var binding: FragmentFavoritesBinding
-    private lateinit var loginPref: LoginPref
+    @Inject lateinit var loginPref: LoginPref
     private lateinit var viewModel: FavoritesViewModel
 
     override fun onCreateView(
@@ -30,8 +33,6 @@ class FavoritesFragment : Fragment() {
     ): View {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
-
-        loginPref = LoginPref(requireContext())
 
         viewModel.favoriteFoodCardList.observe(viewLifecycleOwner) {
             when (it.size) {

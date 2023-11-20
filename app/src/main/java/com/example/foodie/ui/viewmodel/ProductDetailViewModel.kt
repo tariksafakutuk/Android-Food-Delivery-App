@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductDetailViewModel: ViewModel() {
-    private val foodRepo = FoodRepository()
-    private val favRepo = FavoriteRepository()
-
+@HiltViewModel
+class ProductDetailViewModel @Inject constructor(var foodRepo: FoodRepository, var favRepo: FavoriteRepository): ViewModel() {
     private val _cartFoodObject = MutableLiveData<CartFood>()
     val cartFoodObject: MutableLiveData<CartFood> = _cartFoodObject
 

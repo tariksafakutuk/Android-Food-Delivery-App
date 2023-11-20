@@ -12,7 +12,9 @@ import com.example.foodie.R
 import com.example.foodie.databinding.FragmentAccountBinding
 import com.example.foodie.ui.adapter.AccountCardAdapter
 import com.example.foodie.ui.viewmodel.AccountViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private lateinit var viewModel: AccountViewModel
