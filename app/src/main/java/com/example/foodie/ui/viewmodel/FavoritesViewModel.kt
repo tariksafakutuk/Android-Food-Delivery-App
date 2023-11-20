@@ -1,9 +1,9 @@
 package com.example.foodie.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.FavoriteFood
+import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,27 +11,29 @@ import kotlinx.coroutines.launch
 
 class FavoritesViewModel: ViewModel() {
     private val foodRepo = FoodRepository()
+    private val favRepo = FavoriteRepository()
 
-    val favoriteFoodCardList = MutableLiveData<List<FavoriteFood>>()
-    val addCartStatus = MutableLiveData<Boolean>()
+    private val _favoriteFoodCardList = MutableLiveData<List<FavoriteFood>>()
+    val favoriteFoodCardList: MutableLiveData<List<FavoriteFood>> = _favoriteFoodCardList
+
+    private val _addCartStatus = MutableLiveData<Boolean>()
+    val addCartStatus: MutableLiveData<Boolean> = _addCartStatus
 
     init {
         loadFavoriteFood()
     }
 
     fun loadFavoriteFood() {
-        val favoriteFoodList = ArrayList<FavoriteFood>()
-        val f1 = FavoriteFood(1,1, "Ayran", "ayran", 15)
-        val f2 = FavoriteFood(1,1, "Ayran", "ayran", 15)
-        favoriteFoodList.add(f1)
-        favoriteFoodList.add(f2)
-
-        favoriteFoodCardList.value = favoriteFoodList
+        CoroutineScope(Dispatchers.Main).launch {
+            _favoriteFoodCardList.value = favRepo.loadFavoriteFood()
+        }
     }
 
     fun deleteFavoriteFood(favoriteFoodId: Int) {
-        Log.e("Message", "Delete favorite food")
-        loadFavoriteFood()
+        CoroutineScope(Dispatchers.Main).launch {
+            favRepo.deleteFavoriteFood(favoriteFoodId)
+            loadFavoriteFood()
+        }
     }
 
     fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {

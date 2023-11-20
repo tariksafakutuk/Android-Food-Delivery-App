@@ -53,7 +53,19 @@ class FoodCardAdapter(
         }
 
         binding.ivFavoriteButton.setOnClickListener {
-            viewModel.setFavorite(food.foodId)
+            if (isFavorite) {
+                viewModel.removeFavorite(food.foodId)
+                binding.ivFavoriteButton.setImageResource(
+                    mContext.resources.getIdentifier(R.drawable.vc_favorite_border.toString(), "drawable", mContext.packageName)
+                )
+            } else {
+                viewModel.setFavorite(food.foodId, food.foodName, food.foodImageName, food.foodPrice)
+                binding.ivFavoriteButton.setImageResource(
+                    mContext.resources.getIdentifier(R.drawable.vc_favorite.toString(), "drawable", mContext.packageName)
+                )
+            }
+
+            isFavorite = !isFavorite
         }
 
         binding.foodCard.setOnClickListener {

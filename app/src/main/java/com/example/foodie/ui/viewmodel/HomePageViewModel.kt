@@ -1,10 +1,10 @@
 package com.example.foodie.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
+import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class HomePageViewModel: ViewModel() {
     private val foodRepo = FoodRepository()
+    private val favRepo = FavoriteRepository()
 
     private val _foodCardList = MutableLiveData<HashMap<String, List<Any>>>()
     val foodCardList: MutableLiveData<HashMap<String, List<Any>>> = _foodCardList
@@ -35,8 +36,15 @@ class HomePageViewModel: ViewModel() {
         }
     }
 
-    fun setFavorite(foodId: Int) {
-        Log.e("Message", "Add favorite")
-        loadFood()
+    fun setFavorite(foodId: Int, foodName: String, foodImageName: String, foodPrice: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            favRepo.addFavoriteFood(foodId, foodName, foodImageName, foodPrice)
+        }
+    }
+
+    fun removeFavorite(foodId: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            favRepo.deleteFavoriteFood(foodId)
+        }
     }
 }

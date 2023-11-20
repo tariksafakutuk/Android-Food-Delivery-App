@@ -1,9 +1,9 @@
 package com.example.foodie.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
+import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class ProductDetailViewModel: ViewModel() {
     private val foodRepo = FoodRepository()
+    private val favRepo = FavoriteRepository()
 
     private val _cartFoodObject = MutableLiveData<CartFood>()
     val cartFoodObject: MutableLiveData<CartFood> = _cartFoodObject
@@ -19,11 +20,15 @@ class ProductDetailViewModel: ViewModel() {
     val addCartStatus: MutableLiveData<Boolean> = _addCartStatus
 
     fun setFavorite(foodId: Int, foodName: String, foodImageName: String, foodPrice: Int) {
-        Log.e("Message", "Set favorite")
+        CoroutineScope(Dispatchers.Main).launch {
+            favRepo.addFavoriteFood(foodId, foodName, foodImageName, foodPrice)
+        }
     }
 
     fun removeFavorite(foodId: Int) {
-        Log.e("Message", "Remove favorite")
+        CoroutineScope(Dispatchers.Main).launch {
+            favRepo.deleteFavoriteFood(foodId)
+        }
     }
 
     fun foodQuantityChange(action: String, tempCartFoodObject: CartFood, foodPrice: Int) {
