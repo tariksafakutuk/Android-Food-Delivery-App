@@ -50,9 +50,10 @@ dependencies {
     implementation(libs.bundles.android.navigation)
     implementation(libs.bundles.android.datastore)
     api(libs.bundles.kotlin.coroutines)
+    implementation(libs.bundles.android.viewmodel)
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
-    implementation(libs.bundles.android.viewmodel)
+    implementation(libs.bundles.retrofit)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }
