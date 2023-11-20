@@ -37,8 +37,6 @@ class CartFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             username = loginPref.readUsername()
             viewModel.loadCartFood(username)
-            viewModel.calculateTotalPrice()
-
         }
 
         viewModel.cartFoodCardList.observe(viewLifecycleOwner) {

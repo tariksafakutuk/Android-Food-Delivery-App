@@ -4,10 +4,19 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
+import com.example.foodie.data.repository.FoodRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProductDetailViewModel: ViewModel() {
-    val cartFoodObject = MutableLiveData<CartFood>()
-    val addCartStatus = MutableLiveData<Boolean>()
+    private val foodRepo = FoodRepository()
+
+    private val _cartFoodObject = MutableLiveData<CartFood>()
+    val cartFoodObject: MutableLiveData<CartFood> = _cartFoodObject
+
+    private val _addCartStatus = MutableLiveData<Boolean>()
+    val addCartStatus: MutableLiveData<Boolean> = _addCartStatus
 
     fun setFavorite(foodId: Int, foodName: String, foodImageName: String, foodPrice: Int) {
         Log.e("Message", "Set favorite")
@@ -30,11 +39,13 @@ class ProductDetailViewModel: ViewModel() {
             }
         }
         tempCartFoodObject.foodPrice = tempCartFoodObject.foodQuantity * foodPrice
-        cartFoodObject.value = tempCartFoodObject
+        _cartFoodObject.value = tempCartFoodObject
     }
 
-    fun addProductDetailToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
-        Log.e("Message", "Add food detail to cart")
-        addCartStatus.value = true
+    fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+            _addCartStatus.value = true
+        }
     }
 }

@@ -4,52 +4,64 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
+import com.example.foodie.data.repository.FoodRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CartViewModel: ViewModel() {
-    val cartFoodCardList = MutableLiveData<List<CartFood>>()
-    val totalPrice = MutableLiveData<String>()
+    private val foodRepo = FoodRepository()
+
+    private val _cartFoodCardList = MutableLiveData<List<CartFood>>()
+    val cartFoodCardList: MutableLiveData<List<CartFood>> = _cartFoodCardList
+
+    private val _totalPrice = MutableLiveData<String>()
+    val totalPrice: MutableLiveData<String> = _totalPrice
 
     fun loadCartFood(username: String) {
-        val cartFoodList = ArrayList<CartFood>()
-        val cf1 = CartFood(1, "Ayran", "ayran", 15, 2, "tariksafakutuk")
-        val cf2 = CartFood(2, "Baklava", "ayran", 10, 3, "tariksafakutuk")
-        cartFoodList.add(cf1)
-        cartFoodList.add(cf2)
-
-        cartFoodCardList.value = cartFoodList
+        CoroutineScope(Dispatchers.Main).launch {
+            _cartFoodCardList.value = foodRepo.loadCartFood(username)
+            calculateTotalPrice()
+        }
     }
 
-    fun calculateTotalPrice() {
-        val cf1 = cartFoodCardList.value?.get(0)
-        val cf2 = cartFoodCardList.value?.get(1)
-        if (cf1 != null && cf2 != null) {
-            totalPrice.value = ((cf1.foodPrice * cf1.foodQuantity) + (cf2.foodPrice * cf2.foodQuantity)).toString()
+    private fun calculateTotalPrice() {
+        val cartFoodList = _cartFoodCardList.value as List<CartFood>
+        CoroutineScope(Dispatchers.Main).launch {
+            _totalPrice.value = foodRepo.calculateTotalPrice(cartFoodList)
         }
     }
 
     fun confirmCartTotal() {
-        cartFoodCardList.value = arrayListOf()
-        totalPrice.value = ""
+        _cartFoodCardList.value = arrayListOf()
+        _totalPrice.value = ""
         Log.e("Message", "Confirm cart total")
     }
 
-    fun deleteCartFood(cartFoodId: Int, username: String) {
-        Log.e("Message", "Delete cart food - $username")
-        loadCartFood(username)
-        calculateTotalPrice()
-    }
-
-    fun quantityAction(action: String, cartFoodId: Int, username: String) {
+    fun cartFoodAction(
+        action: String,
+        cartFoodId: Int,
+        foodName: String,
+        foodImageName: String,
+        foodPrice: Int,
+        foodQuantity: Int,
+        username: String
+    ) {
         when (action) {
-            "Decrease" -> {
-                Log.e("Message", "Decrease quantity")
+            "Delete" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    foodRepo.deleteCartFood(cartFoodId, username)
+                    loadCartFood(username)
+                }
             }
 
-            "Increase" -> {
-                Log.e("Message", "Increase quantity")
+            else -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    foodRepo.deleteCartFood(cartFoodId, username)
+                    foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+                    loadCartFood(username)
+                }
             }
         }
-        loadCartFood(username)
-        calculateTotalPrice()
     }
 }

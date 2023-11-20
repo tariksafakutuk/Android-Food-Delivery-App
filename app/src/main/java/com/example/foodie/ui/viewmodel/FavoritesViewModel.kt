@@ -4,8 +4,14 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.FavoriteFood
+import com.example.foodie.data.repository.FoodRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FavoritesViewModel: ViewModel() {
+    private val foodRepo = FoodRepository()
+
     val favoriteFoodCardList = MutableLiveData<List<FavoriteFood>>()
     val addCartStatus = MutableLiveData<Boolean>()
 
@@ -28,8 +34,10 @@ class FavoritesViewModel: ViewModel() {
         loadFavoriteFood()
     }
 
-    fun addFavoritesFoodToCart(favoriteFood: FavoriteFood, username: String) {
-        Log.e("Message", "Add favorite food to cart")
-        addCartStatus.value = true
+    fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+            addCartStatus.value = true
+        }
     }
 }

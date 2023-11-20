@@ -41,7 +41,12 @@ class FavoriteCardAdapter(
         }
 
         binding.buttonFavoritesCart.setOnClickListener {
-            viewModel.addFavoritesFoodToCart(favoriteFood, username)
+            viewModel.addToCart(
+                favoriteFood.foodName,
+                favoriteFood.foodImageName,
+                favoriteFood.foodPrice,
+                1,
+                username)
         }
     }
 

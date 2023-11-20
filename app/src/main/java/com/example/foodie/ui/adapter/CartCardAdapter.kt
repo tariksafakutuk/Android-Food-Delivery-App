@@ -36,15 +36,52 @@ class CartCardAdapter(
         binding.cartFoodObject = cartFood
 
         binding.ivCartDelete.setOnClickListener {
-            viewModel.deleteCartFood(cartFood.cartFoodId, username)
+            viewModel.cartFoodAction(
+                "Delete",
+                cartFood.cartFoodId,
+                cartFood.foodName,
+                cartFood.foodImageName,
+                cartFood.foodPrice,
+                cartFood.foodQuantity,
+                username
+            )
         }
 
         binding.ivDecrease.setOnClickListener {
-            viewModel.quantityAction("Decrease", cartFood.cartFoodId, username)
+            cartFood.foodQuantity -= 1
+            when (cartFood.foodQuantity) {
+                0 -> viewModel.cartFoodAction(
+                    "Delete",
+                    cartFood.cartFoodId,
+                    cartFood.foodName,
+                    cartFood.foodImageName,
+                    cartFood.foodPrice,
+                    0,
+                    username
+                )
+
+                else -> viewModel.cartFoodAction(
+                    "Decrease",
+                    cartFood.cartFoodId,
+                    cartFood.foodName,
+                    cartFood.foodImageName,
+                    cartFood.foodPrice,
+                    cartFood.foodQuantity,
+                    username
+                )
+            }
         }
 
         binding.ivIncrease.setOnClickListener {
-            viewModel.quantityAction("Increase", cartFood.cartFoodId, username)
+            viewModel.cartFoodAction(
+                "Increase",
+                cartFood.cartFoodId,
+                cartFood.foodName,
+                cartFood.foodImageName,
+                cartFood.foodPrice,
+                cartFood.foodQuantity,
+                username
+            )
         }
     }
 

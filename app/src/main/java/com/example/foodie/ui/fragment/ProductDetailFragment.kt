@@ -94,7 +94,7 @@ class ProductDetailFragment : Fragment() {
     fun addCart(cartFoodObject: CartFood) {
         CoroutineScope(Dispatchers.Main).launch {
             val username = loginPref.readUsername()
-            viewModel.addProductDetailToCart(
+            viewModel.addToCart(
                 cartFoodObject.foodName,
                 cartFoodObject.foodImageName,
                 cartFoodObject.foodPrice,
