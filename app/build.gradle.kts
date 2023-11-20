@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
     alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 android {
@@ -48,6 +50,8 @@ dependencies {
     implementation(libs.bundles.android.navigation)
     implementation(libs.bundles.android.datastore)
     api(libs.bundles.kotlin.coroutines)
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.bundles.android.viewmodel)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)

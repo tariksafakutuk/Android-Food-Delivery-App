@@ -17,6 +17,9 @@ kotlinxCoroutines = "1.7.1"
 androidxLifecycle = "2.6.2"
 androidxActivity = "1.8.1"
 
+# Dagger-Hilt
+daggerHilt = "2.48"
+
 # Test
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -42,6 +45,11 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 # ViewModel
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
+
+# Dagger-Hilt
+dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
+dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHilt" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -82,4 +90,10 @@ android-test = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+# Navigation
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+
+# Dagger-Hilt
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }

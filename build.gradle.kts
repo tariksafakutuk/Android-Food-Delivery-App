@@ -4,6 +4,7 @@
 buildscript {
     dependencies {
         classpath(libs.androidx.navigation.safeargs)
+        classpath(libs.dagger.hilt.android.gradle)
     }
 }
 
@@ -11,4 +12,6 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.kotlin) apply false
     alias(libs.plugins.navigation.safeargs) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.dagger.hilt.android) apply false
 }
