@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodie.R
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.databinding.FavoriteCardBinding
@@ -30,9 +31,8 @@ class FavoriteCardAdapter(
         val favoriteFood = favoriteFoodList.get(position)
         val binding = holder.design
 
-        binding.ivFavoriteFood.setImageResource(
-            mContext.resources.getIdentifier(favoriteFood.foodImageName, "drawable", mContext.packageName)
-        )
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${favoriteFood.foodImageName}"
+        Glide.with(mContext).load(url).into(binding.ivFavoriteFood)
 
         binding.favoriteFoodObject = favoriteFood
 

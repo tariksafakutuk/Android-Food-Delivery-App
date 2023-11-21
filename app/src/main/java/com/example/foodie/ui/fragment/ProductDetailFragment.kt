@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.foodie.R
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.FragmentProductDetailBinding
@@ -47,9 +48,8 @@ class ProductDetailFragment : Fragment() {
 
         binding.cartFoodObject = CartFood(1, bundle.food.foodName, bundle.food.foodImageName, bundle.food.foodPrice, 1, "test")
 
-        binding.ivDetailFood.setImageResource(
-            resources.getIdentifier(bundle.food.foodImageName, "drawable", requireContext().packageName)
-        )
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${bundle.food.foodImageName}"
+        Glide.with(this).load(url).into(binding.ivDetailFood)
 
         viewModel.cartFoodObject.observe(viewLifecycleOwner) {
             binding.cartFoodObject = it

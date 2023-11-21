@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodie.R
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.databinding.CartCardBinding
@@ -29,9 +30,8 @@ class CartCardAdapter(
         val cartFood = cartFoodList.get(position)
         val binding = holder.design
 
-        binding.ivCartFood.setImageResource(
-            mContext.resources.getIdentifier(cartFood.foodImageName, "drawable", mContext.packageName)
-        )
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${cartFood.foodImageName}"
+        Glide.with(mContext).load(url).into(binding.ivCartFood)
 
         binding.cartFoodObject = cartFood
 
