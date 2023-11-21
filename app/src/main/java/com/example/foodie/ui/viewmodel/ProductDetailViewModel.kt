@@ -49,7 +49,7 @@ class ProductDetailViewModel @Inject constructor(var foodRepo: FoodRepository, v
 
     fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+            foodRepo.addToCart(foodName, foodImageName, foodPrice/foodQuantity, foodQuantity, username)
             _addCartStatus.value = true
         }
     }

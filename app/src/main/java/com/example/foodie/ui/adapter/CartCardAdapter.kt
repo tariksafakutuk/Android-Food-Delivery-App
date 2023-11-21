@@ -73,6 +73,7 @@ class CartCardAdapter(
         }
 
         binding.ivIncrease.setOnClickListener {
+            cartFood.foodQuantity += 1
             viewModel.cartFoodAction(
                 "Increase",
                 cartFood.cartFoodId,

@@ -66,7 +66,10 @@ class CartFragment : Fragment() {
     fun confirmCartTotal() {
         Snackbar.make(binding.tvCartTotal, "Sepeti onaylamak istediğinize emin misiniz?", Snackbar.LENGTH_SHORT)
             .setAction("Evet") {
-                viewModel.confirmCartTotal()
+                CoroutineScope(Dispatchers.Main).launch {
+                    val username = loginPref.readUsername()
+                    viewModel.confirmCartTotal(username)
+                }
             }
             .show()
     }

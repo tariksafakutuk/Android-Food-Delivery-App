@@ -1,6 +1,5 @@
 package com.example.foodie.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.entity.CartFood
@@ -33,10 +32,13 @@ class CartViewModel @Inject constructor(var foodRepo: FoodRepository): ViewModel
         }
     }
 
-    fun confirmCartTotal() {
-        _cartFoodCardList.value = arrayListOf()
-        _totalPrice.value = ""
-        Log.e("Message", "Confirm cart total")
+    fun confirmCartTotal(username: String) {
+        val cartFoodList = _cartFoodCardList.value as List<CartFood>
+        CoroutineScope(Dispatchers.Main).launch {
+            foodRepo.confirmCartTotal(cartFoodList, username)
+            _cartFoodCardList.value = arrayListOf()
+            _totalPrice.value = ""
+        }
     }
 
     fun cartFoodAction(

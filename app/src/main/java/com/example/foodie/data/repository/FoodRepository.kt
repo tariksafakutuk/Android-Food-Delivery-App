@@ -2,14 +2,12 @@ package com.example.foodie.data.repository
 
 import com.example.foodie.data.datasource.FoodDataSource
 import com.example.foodie.data.entity.CartFood
-import com.example.foodie.data.entity.FavoriteFood
-import com.example.foodie.data.entity.Food
 
 class FoodRepository(var fds: FoodDataSource) {
     suspend fun loadFood(): HashMap<String, List<Any>> = fds.loadFood()
 
-    suspend fun searchFood(searchQuery: String, foodList: List<Food>, favoriteFoodList: List<FavoriteFood>): HashMap<String, List<Any>> =
-        fds.searchFood(searchQuery, foodList, favoriteFoodList)
+    suspend fun searchFood(searchQuery: String): HashMap<String, List<Any>> =
+        fds.searchFood(searchQuery)
 
     suspend fun loadCartFood(username: String): List<CartFood> =
         fds.loadCartFood(username)
@@ -22,4 +20,7 @@ class FoodRepository(var fds: FoodDataSource) {
 
     suspend fun deleteCartFood(cartFoodId: Int, username: String) =
         fds.deleteCartFood(cartFoodId, username)
+
+    suspend fun confirmCartTotal(cartFoodList: List<CartFood>, username: String) =
+        fds.confirmCartTotal(cartFoodList, username)
 }

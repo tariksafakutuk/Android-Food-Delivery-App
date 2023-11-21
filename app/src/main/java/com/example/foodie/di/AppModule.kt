@@ -8,6 +8,8 @@ import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
 import com.example.foodie.data.repository.UserRepository
 import com.example.foodie.datastore.LoginPref
+import com.example.foodie.retrofit.ApiUtils
+import com.example.foodie.retrofit.FoodDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,8 +28,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideFoodDataSource(): FoodDataSource {
-        return FoodDataSource()
+    fun provideFoodDataSource(fdao: FoodDao): FoodDataSource {
+        return FoodDataSource(fdao)
     }
 
     @Provides
@@ -52,6 +54,12 @@ class AppModule {
     @Singleton
     fun provideFavoriteRepository(fds: FavoriteDataSource): FavoriteRepository {
         return FavoriteRepository(fds)
+    }
+
+    @Provides
+    @Singleton
+    fun proviteFoodDao(): FoodDao {
+        return ApiUtils.getFoodDao()
     }
 
     @Provides

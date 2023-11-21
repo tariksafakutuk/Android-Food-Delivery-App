@@ -1,20 +1,16 @@
 package com.example.foodie.data.datasource
 
-import android.util.Log
 import com.example.foodie.data.entity.CartFood
 import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
+import com.example.foodie.retrofit.FoodDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FoodDataSource {
+class FoodDataSource(var fdao: FoodDao) {
     suspend fun loadFood(): HashMap<String, List<Any>> =
         withContext(Dispatchers.IO) {
-            val foodList = ArrayList<Food>()
-            val f1 = Food(1, "Ayran", "ayran", 15)
-            val f2 = Food(2, "Baklava", "ayran", 15)
-            foodList.add(f1)
-            foodList.add(f2)
+            val foodList = fdao.loadFood().foodList
 
             val favoriteFoodList = ArrayList<FavoriteFood>()
             val ff1 = FavoriteFood(1, 2, "Baklava", "ayran", 15)
@@ -27,40 +23,67 @@ class FoodDataSource {
             return@withContext tempHashMap
         }
 
-    suspend fun searchFood(searchQuery: String, foodList: List<Food>, favoriteFoodList: List<FavoriteFood>): HashMap<String, List<Any>> =
+    suspend fun searchFood(
+        searchQuery: String,
+    ): HashMap<String, List<Any>> =
         withContext(Dispatchers.IO) {
-            val filteredList = foodList.filter { it.foodName.lowercase().contains(searchQuery.lowercase()) }
+            val foodResponse = loadFood()
+            val foodList = foodResponse["Food"] as List<Food>
+
+            val filteredList =
+                foodList.filter { it.foodName.lowercase().contains(searchQuery.lowercase()) }
 
             val tempHashMap = HashMap<String, List<Any>>()
             tempHashMap["Food"] = filteredList
-            tempHashMap["FavoriteFood"] = favoriteFoodList
+            tempHashMap["FavoriteFood"] = foodResponse["FavoriteFood"] as List<FavoriteFood>
 
             return@withContext tempHashMap
         }
 
     suspend fun loadCartFood(username: String): List<CartFood> =
         withContext(Dispatchers.IO) {
+            addToCart("error", "error",0,0, username)
+            val tempFoodList = fdao.loadCartFood(username).cartFoodList
+            var errorFoodId = 0
             val cartFoodList = ArrayList<CartFood>()
-            val cf1 = CartFood(1, "Ayran", "ayran", 15, 2, "tariksafakutuk")
-            val cf2 = CartFood(2, "Baklava", "ayran", 10, 3, "tariksafakutuk")
-            cartFoodList.add(cf1)
-            cartFoodList.add(cf2)
+
+            tempFoodList.forEach {
+                if (it.foodName == "error") {
+                    errorFoodId = it.cartFoodId
+                } else {
+                    cartFoodList.add(it)
+                }
+            }
+            deleteCartFood(errorFoodId, username)
+
+            cartFoodList.sortBy { it.foodName }
 
             return@withContext cartFoodList
         }
 
     suspend fun calculateTotalPrice(cartFoodList: List<CartFood>): String =
         withContext(Dispatchers.IO) {
-            val cf1 = cartFoodList.get(0)
-            val cf2 = cartFoodList.get(1)
-            return@withContext ((cf1.foodPrice * cf1.foodQuantity) + (cf2.foodPrice * cf2.foodQuantity)).toString()
+            var totalPrice = 0
+            cartFoodList.forEach { cartFood ->
+                totalPrice += (cartFood.foodPrice * cartFood.foodQuantity)
+            }
+            return@withContext totalPrice.toString()
         }
 
-    suspend fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
-        Log.e("Message", "Add to cart")
-    }
+    suspend fun addToCart(
+        foodName: String,
+        foodImageName: String,
+        foodPrice: Int,
+        foodQuantity: Int,
+        username: String
+    ) = fdao.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
 
-    suspend fun deleteCartFood(cartFoodId: Int, username: String) {
-        Log.e("Message", "Delete cart food - $username")
+    suspend fun deleteCartFood(cartFoodId: Int, username: String) =
+        fdao.deleteCartFood(cartFoodId, username)
+
+    suspend fun confirmCartTotal(cartFoodList: List<CartFood>, username: String) {
+        cartFoodList.forEach { cartFood ->
+            deleteCartFood(cartFood.cartFoodId, username)
+        }
     }
 }

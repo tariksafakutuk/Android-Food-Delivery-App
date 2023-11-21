@@ -27,6 +27,7 @@ class HomePageFragment : Fragment() {
     private lateinit var binding: FragmentHomePageBinding
     private lateinit var viewModel: HomePageViewModel
     @Inject lateinit var loginPref: LoginPref
+    private var isAgainCreate = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,12 +51,16 @@ class HomePageFragment : Fragment() {
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.searchFood(query)
+                if (!isAgainCreate) {
+                    viewModel.searchFood(query)
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                viewModel.searchFood(newText)
+                if (!isAgainCreate) {
+                    viewModel.searchFood(newText)
+                }
                 return true
             }
 
@@ -71,6 +76,16 @@ class HomePageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadFood()
+        if (isAgainCreate) {
+            binding.searchView.setQuery("", true)
+            binding.foodCardAdapter = null
+            viewModel.loadFood()
+            isAgainCreate = false
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isAgainCreate = true
     }
 }

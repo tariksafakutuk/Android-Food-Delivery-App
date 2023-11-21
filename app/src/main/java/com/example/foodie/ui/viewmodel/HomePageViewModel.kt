@@ -2,8 +2,6 @@ package com.example.foodie.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.foodie.data.entity.FavoriteFood
-import com.example.foodie.data.entity.Food
 import com.example.foodie.data.repository.FavoriteRepository
 import com.example.foodie.data.repository.FoodRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,11 +26,8 @@ class HomePageViewModel @Inject constructor(var foodRepo: FoodRepository, var fa
     }
 
     fun searchFood(searchQuery: String) {
-        val foodList = _foodCardList.value?.get("Food") as List<Food>
-        val favoriteFoodList = _foodCardList.value?.get("FavoriteFood") as List<FavoriteFood>
-
         CoroutineScope(Dispatchers.Main).launch {
-            _foodCardList.value = foodRepo.searchFood(searchQuery, foodList, favoriteFoodList)
+            _foodCardList.value = foodRepo.searchFood(searchQuery)
         }
     }
 
