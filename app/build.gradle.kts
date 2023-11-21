@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.bundles.retrofit)
+    implementation(libs.glide)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }

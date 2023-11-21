@@ -25,6 +25,9 @@ retrofit = "2.6.0"
 gson = "2.9.0"
 converterGson = "2.5.0"
 
+# Glide
+glide = "4.13.2"
+
 # Test
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -57,9 +60,12 @@ dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compil
 dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHilt" }
 
 # Retrofit
-squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
-code-gson = { module = "com.google.code.gson:gson", version.ref = "gson"}
-retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson"}
+squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+code-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
+# Glide
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
