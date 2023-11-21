@@ -1,20 +1,16 @@
 package com.example.foodie.data.datasource
 
 import com.example.foodie.data.entity.CartFood
-import com.example.foodie.data.entity.FavoriteFood
 import com.example.foodie.data.entity.Food
 import com.example.foodie.retrofit.FoodDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FoodDataSource(var fdao: FoodDao) {
+class FoodDataSource(var fdao: FoodDao, var fds: FavoriteDataSource) {
     suspend fun loadFood(): HashMap<String, List<Any>> =
         withContext(Dispatchers.IO) {
             val foodList = fdao.loadFood().foodList
-
-            val favoriteFoodList = ArrayList<FavoriteFood>()
-            val ff1 = FavoriteFood(1, 2, "Baklava", "ayran", 15)
-            favoriteFoodList.add(ff1)
+            val favoriteFoodList = fds.loadFavoriteFood()
 
             val tempHashMap = HashMap<String, List<Any>>()
             tempHashMap["Food"] = foodList
@@ -27,15 +23,15 @@ class FoodDataSource(var fdao: FoodDao) {
         searchQuery: String,
     ): HashMap<String, List<Any>> =
         withContext(Dispatchers.IO) {
-            val foodResponse = loadFood()
-            val foodList = foodResponse["Food"] as List<Food>
+            val foodList = loadFood()["Food"] as List<Food>
+            val favoriteFoodList = fds.loadFavoriteFood()
 
             val filteredList =
                 foodList.filter { it.foodName.lowercase().contains(searchQuery.lowercase()) }
 
             val tempHashMap = HashMap<String, List<Any>>()
             tempHashMap["Food"] = filteredList
-            tempHashMap["FavoriteFood"] = foodResponse["FavoriteFood"] as List<FavoriteFood>
+            tempHashMap["FavoriteFood"] = favoriteFoodList
 
             return@withContext tempHashMap
         }

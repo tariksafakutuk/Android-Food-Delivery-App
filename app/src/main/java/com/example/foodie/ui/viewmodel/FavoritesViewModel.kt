@@ -29,9 +29,9 @@ class FavoritesViewModel @Inject constructor(var foodRepo: FoodRepository, var f
         }
     }
 
-    fun deleteFavoriteFood(favoriteFoodId: Int) {
+    fun deleteFavoriteFood(foodId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-            favRepo.deleteFavoriteFood(favoriteFoodId)
+            favRepo.deleteFavoriteFood(foodId)
             loadFavoriteFood()
         }
     }

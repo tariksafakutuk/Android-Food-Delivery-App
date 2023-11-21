@@ -47,6 +47,7 @@ class HomePageFragment : Fragment() {
                 it["FavoriteFood"] as List<FavoriteFood>,
                 viewModel
             )
+            binding.rvFoodCard.setItemViewCacheSize(it["Food"]!!.size)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

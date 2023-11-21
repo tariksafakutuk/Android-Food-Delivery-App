@@ -37,7 +37,7 @@ class FavoriteCardAdapter(
         binding.favoriteFoodObject = favoriteFood
 
         binding.ivFavoriteButton.setOnClickListener {
-            viewModel.deleteFavoriteFood(favoriteFood.favoriteFoodId)
+            viewModel.deleteFavoriteFood(favoriteFood.foodId)
         }
 
         binding.buttonFavoritesCart.setOnClickListener {

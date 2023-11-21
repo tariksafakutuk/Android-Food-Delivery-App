@@ -1,6 +1,7 @@
 package com.example.foodie.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.foodie.data.datasource.FavoriteDataSource
 import com.example.foodie.data.datasource.FoodDataSource
 import com.example.foodie.data.datasource.UserDataSource
@@ -10,6 +11,8 @@ import com.example.foodie.data.repository.UserRepository
 import com.example.foodie.datastore.LoginPref
 import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.retrofit.FoodDao
+import com.example.foodie.room.Database
+import com.example.foodie.room.FavoriteFoodDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,14 +31,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideFoodDataSource(fdao: FoodDao): FoodDataSource {
-        return FoodDataSource(fdao)
+    fun provideFoodDataSource(fdao: FoodDao, fds: FavoriteDataSource): FoodDataSource {
+        return FoodDataSource(fdao, fds)
     }
 
     @Provides
     @Singleton
-    fun provideFavoriteDataSource(): FavoriteDataSource {
-        return FavoriteDataSource()
+    fun provideFavoriteDataSource(favDao: FavoriteFoodDao): FavoriteDataSource {
+        return FavoriteDataSource(favDao)
     }
 
     @Provides
@@ -58,8 +61,16 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun proviteFoodDao(): FoodDao {
+    fun provideFoodDao(): FoodDao {
         return ApiUtils.getFoodDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteFoodDao(@ApplicationContext context: Context): FavoriteFoodDao {
+        val db = Room.databaseBuilder(context, Database::class.java, "database.sqlite")
+            .createFromAsset("database.sqlite").build()
+        return db.getFavoriteFoodDao()
     }
 
     @Provides

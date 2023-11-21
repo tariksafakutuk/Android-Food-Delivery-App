@@ -1,27 +1,39 @@
 package com.example.foodie.data.datasource
 
-import android.util.Log
 import com.example.foodie.data.entity.FavoriteFood
+import com.example.foodie.room.FavoriteFoodDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FavoriteDataSource {
+class FavoriteDataSource(var favDao: FavoriteFoodDao) {
     suspend fun loadFavoriteFood(): List<FavoriteFood> =
         withContext(Dispatchers.IO) {
-            val favoriteFoodList = ArrayList<FavoriteFood>()
-            val f1 = FavoriteFood(1,1, "Ayran", "ayran", 15)
-            val f2 = FavoriteFood(1,1, "Ayran", "ayran", 15)
-            favoriteFoodList.add(f1)
-            favoriteFoodList.add(f2)
-
-            return@withContext favoriteFoodList
+            return@withContext favDao.loadFavoriteFood()
         }
 
-    suspend fun addFavoriteFood(foodId: Int, foodName: String, foodImageName: String, foodPrice: Int) {
-        Log.e("Message", "Add favorite food")
+    suspend fun addFavoriteFood(
+        foodId: Int,
+        foodName: String,
+        foodImageName: String,
+        foodPrice: Int
+    ) {
+        val newFavoriteFood = FavoriteFood(0, foodId, foodName, foodImageName, foodPrice)
+        favDao.addFavoriteFood(newFavoriteFood)
     }
 
     suspend fun deleteFavoriteFood(foodId: Int) {
-        Log.e("Message", "Delete favorite food")
+        val favoriteFoodList = loadFavoriteFood()
+        favoriteFoodList.forEach { favoriteFood ->
+            if (favoriteFood.foodId == foodId) {
+                val deletedFavoriteFood = FavoriteFood(
+                    favoriteFood.favoriteFoodId,
+                    favoriteFood.foodId,
+                    favoriteFood.foodName,
+                    favoriteFood.foodImageName,
+                    favoriteFood.foodPrice
+                )
+                favDao.deleteFavoriteFood(deletedFavoriteFood)
+            }
+        }
     }
 }
