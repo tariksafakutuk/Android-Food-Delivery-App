@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.gms.google.services)
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.bundles.android.room)
     kapt(libs.androidx.room.compiler)
+    implementation(libs.bundles.firebase)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }

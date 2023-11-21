@@ -14,4 +14,5 @@ plugins {
     alias(libs.plugins.navigation.safeargs) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.dagger.hilt.android) apply false
+    alias(libs.plugins.gms.google.services) apply false
 }
