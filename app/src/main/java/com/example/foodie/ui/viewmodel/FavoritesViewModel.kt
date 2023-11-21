@@ -38,7 +38,7 @@ class FavoritesViewModel @Inject constructor(var foodRepo: FoodRepository, var f
 
     fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+            foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username, "Detail")
             _addCartStatus.value = true
         }
     }

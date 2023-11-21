@@ -15,8 +15,8 @@ class FoodRepository(var fds: FoodDataSource) {
     suspend fun calculateTotalPrice(cartFoodList: List<CartFood>): String =
         fds.calculateTotalPrice(cartFoodList)
 
-    suspend fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String) =
-        fds.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+    suspend fun addToCart(foodName: String, foodImageName: String, foodPrice: Int, foodQuantity: Int, username: String, action: String) =
+        fds.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username, action)
 
     suspend fun deleteCartFood(cartFoodId: Int, username: String) =
         fds.deleteCartFood(cartFoodId, username)

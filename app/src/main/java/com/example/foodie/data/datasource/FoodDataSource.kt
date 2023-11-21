@@ -42,7 +42,7 @@ class FoodDataSource(var fdao: FoodDao) {
 
     suspend fun loadCartFood(username: String): List<CartFood> =
         withContext(Dispatchers.IO) {
-            addToCart("error", "error",0,0, username)
+            addToCart("error", "error",0,0, username, "Error")
             val tempFoodList = fdao.loadCartFood(username).cartFoodList
             var errorFoodId = 0
             val cartFoodList = ArrayList<CartFood>()
@@ -75,8 +75,29 @@ class FoodDataSource(var fdao: FoodDao) {
         foodImageName: String,
         foodPrice: Int,
         foodQuantity: Int,
-        username: String
-    ) = fdao.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+        username: String,
+        action: String
+    ) {
+        when (action) {
+            "Detail" -> {
+                var newQuantity = foodQuantity
+
+                val cartFoodList = loadCartFood(username)
+                cartFoodList.forEach { cartFood ->
+                    if (cartFood.foodName == foodName) {
+                        newQuantity += cartFood.foodQuantity
+                        deleteCartFood(cartFood.cartFoodId, username)
+                    }
+                }
+                fdao.addToCart(foodName, foodImageName, foodPrice, newQuantity, username)
+            }
+
+            else -> {
+                fdao.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+            }
+        }
+
+    }
 
     suspend fun deleteCartFood(cartFoodId: Int, username: String) =
         fdao.deleteCartFood(cartFoodId, username)

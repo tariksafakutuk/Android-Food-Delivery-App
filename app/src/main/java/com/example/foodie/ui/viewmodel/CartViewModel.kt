@@ -61,7 +61,7 @@ class CartViewModel @Inject constructor(var foodRepo: FoodRepository): ViewModel
             else -> {
                 CoroutineScope(Dispatchers.Main).launch {
                     foodRepo.deleteCartFood(cartFoodId, username)
-                    foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username)
+                    foodRepo.addToCart(foodName, foodImageName, foodPrice, foodQuantity, username, "Increase-Decrease")
                     loadCartFood(username)
                 }
             }
