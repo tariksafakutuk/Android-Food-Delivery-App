@@ -104,8 +104,10 @@ class AccountDetailFragment : Fragment() {
 
     fun updateAccount(currentText: String, newText: String, againNewText: String) {
         CoroutineScope(Dispatchers.Main).launch {
+            val email = loginPref.readEmail()
+            val username = loginPref.readUsername()
             val password = loginPref.readPassword()
-            viewModel.checkUpdate(bundle.action, currentText, newText, againNewText, password)
+            viewModel.checkUpdate(bundle.action, currentText, newText, againNewText, email, username, password)
         }
     }
 

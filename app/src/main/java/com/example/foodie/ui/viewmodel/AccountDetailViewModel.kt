@@ -4,13 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodie.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository): ViewModel() {
+class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository) : ViewModel() {
     private val _updateStatus = MutableLiveData<List<String>>()
     val updateStatus: MutableLiveData<List<String>> = _updateStatus
 
@@ -23,7 +20,15 @@ class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository): 
     private val _againNewTextError = MutableLiveData<String>()
     val againNewTextError: MutableLiveData<String> = _againNewTextError
 
-    fun checkUpdate(action: String, currentText: String, newText: String, againNewText: String, password: String) {
+    fun checkUpdate(
+        action: String,
+        currentText: String,
+        newText: String,
+        againNewText: String,
+        email: String,
+        username: String,
+        password: String
+    ) {
         when (action) {
             "email" -> {
                 when (newText) {
@@ -32,11 +37,12 @@ class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository): 
                     }
 
                     againNewText -> {
-                        _updateStatus.value = arrayListOf("email", newText)
+                        _updateStatus.value = arrayListOf("email", newText, email, username, password)
                     }
 
                     else -> {
-                        _againNewTextError.value = "Girilen email bilgisi Yeni Email alanındakiyle aynı olmalıdır"
+                        _againNewTextError.value =
+                            "Girilen email bilgisi Yeni Email alanındakiyle aynı olmalıdır"
                     }
                 }
             }
@@ -49,17 +55,16 @@ class AccountDetailViewModel @Inject constructor(var userRepo: UserRepository): 
                 } else if (newText == "") {
                     _newTextError.value = "Yeni şifrenizi girmelisiniz"
                 } else if (newText == againNewText) {
-                    _updateStatus.value = arrayListOf("password", newText)
+                    _updateStatus.value = arrayListOf("password", newText, email, username, password)
                 } else {
-                    _againNewTextError.value = "Girilen şifreniz Yeni Şifre alanındakiyle aynı olmalıdır"
+                    _againNewTextError.value =
+                        "Girilen şifreniz Yeni Şifre alanındakiyle aynı olmalıdır"
                 }
             }
         }
     }
 
     fun updateAccount(updateStatus: List<String>) {
-        CoroutineScope(Dispatchers.Main).launch {
-            userRepo.updateAccount(updateStatus)
-        }
+        userRepo.updateAccount(updateStatus)
     }
 }

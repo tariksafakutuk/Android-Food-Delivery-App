@@ -13,6 +13,9 @@ import com.example.foodie.retrofit.ApiUtils
 import com.example.foodie.retrofit.FoodDao
 import com.example.foodie.room.Database
 import com.example.foodie.room.FavoriteFoodDao
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,8 +28,8 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideUserDataSource(): UserDataSource {
-        return UserDataSource()
+    fun provideUserDataSource(collectionUser: CollectionReference, loginPref: LoginPref): UserDataSource {
+        return UserDataSource(collectionUser, loginPref)
     }
 
     @Provides
@@ -71,6 +74,12 @@ class AppModule {
         val db = Room.databaseBuilder(context, Database::class.java, "database.sqlite")
             .createFromAsset("database.sqlite").build()
         return db.getFavoriteFoodDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionReference(): CollectionReference {
+        return Firebase.firestore.collection("User")
     }
 
     @Provides

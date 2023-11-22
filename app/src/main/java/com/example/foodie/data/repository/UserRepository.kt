@@ -1,21 +1,22 @@
 package com.example.foodie.data.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.example.foodie.data.datasource.UserDataSource
 import com.example.foodie.data.entity.AccountCardItem
 
 class UserRepository(var uds: UserDataSource) {
-    suspend fun isLoginCheck(email: String, username: String, password: String): String =
-        uds.isLoginCheck(email, username, password)
+    fun isLoginCheck(): MutableLiveData<List<String>> =
+        uds.isLoginCheck()
 
-    suspend fun login(account: String, password: String): List<String> =
+    fun login(account: String, password: String): MutableLiveData<List<String>> =
         uds.login(account, password)
 
-    suspend fun signUp(email: String, username: String, password: String): List<String> =
+    fun signUp(email: String, username: String, password: String): List<String> =
         uds.signUp(email, username, password)
 
     suspend fun loadAccountCard(): List<AccountCardItem> =
         uds.loadAccountCard()
 
-    suspend fun updateAccount(updateStatus: List<String>) =
+    fun updateAccount(updateStatus: List<String>) =
         uds.updateAccount(updateStatus)
 }

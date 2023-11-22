@@ -35,28 +35,22 @@ class LoginFragment : Fragment() {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.bg_page)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         binding.loginFragment = this
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val email = loginPref.readEmail()
-            val username = loginPref.readUsername()
-            val password = loginPref.readPassword()
-
-            viewModel.isLoginCheck(email, username, password)
-        }
-
-        viewModel.loginStatus.observe(viewLifecycleOwner) {
-            CoroutineScope(Dispatchers.Main).launch {
-                binding.loginStatus = it
-
-                if (it == "login") {
-                    delay(2000)
-                    Navigation.changePage(binding.tvLogin, R.id.action_loginFragment_to_homePageFragment)
-                }
-            }
-        }
+        binding.loginStatus = "loading"
 
         viewModel.userData.observe(viewLifecycleOwner) {
             when (it[0]) {
+                "loginFailed" -> {
+                    binding.loginStatus = it[0]
+                }
+
+                "login" -> {
+                    binding.loginStatus = it[0]
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(2000)
+                        Navigation.changePage(binding.tvLogin, R.id.action_loginFragment_to_homePageFragment)
+                    }
+                }
+
                 "passwordFailed" -> {
                     Snackbar.make(binding.tvLogin, "Şifre Hatalı", Snackbar.LENGTH_SHORT).show()
                 }
@@ -66,11 +60,11 @@ class LoginFragment : Fragment() {
                 }
 
                 else -> {
+                    viewModel.userData.value = arrayListOf("login")
                     CoroutineScope(Dispatchers.Main).launch {
                         loginPref.createEmail(it[0])
                         loginPref.createUsername(it[1])
                         loginPref.createPassword(it[2])
-                        viewModel.loginStatus.value = "login"
                     }
                 }
             }
@@ -83,6 +77,11 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val tempViewModel: LoginViewModel by viewModels()
         viewModel = tempViewModel
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.userData.value = arrayListOf("loginFailed")
     }
 
     fun clickLoginButton(view: View, account: String, password: String) {
