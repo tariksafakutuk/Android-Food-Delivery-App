@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.bundles.android.room)
     kapt(libs.androidx.room.compiler)
     implementation(libs.bundles.firebase)
+    implementation(libs.android.lottie)
     testImplementation(libs.bundles.unit.test)
     androidTestImplementation(libs.bundles.android.test)
 }

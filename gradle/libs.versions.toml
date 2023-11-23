@@ -37,6 +37,9 @@ gmsGoogleServices = "4.4.0"
 firebaseBom = "32.6.0"
 firestore = "24.9.1"
 
+# Lottie
+lottie = "3.0.3"
+
 # Test
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -85,6 +88,9 @@ androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-kt
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firestore" }
+
+# Lottie
+android-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit4" }
