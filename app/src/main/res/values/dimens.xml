@@ -29,4 +29,5 @@
     <dimen name="product_detail_name">22sp</dimen>
     <dimen name="product_detail_item">16sp</dimen>
     <dimen name="product_detail_price">20sp</dimen>
+    <dimen name="order_text">28sp</dimen>
 </resources>

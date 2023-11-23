@@ -10,8 +10,8 @@
             type="com.example.foodie.ui.fragment.CartFragment" />
 
         <variable
-            name="hasCartItem"
-            type="Boolean" />
+            name="visibilityAction"
+            type="String" />
 
         <variable
             name="cartCardAdapter"
@@ -27,6 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@color/bg_page"
         tools:context=".ui.fragment.CartFragment">
 
@@ -53,7 +54,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="11dp"
             android:adapter="@{cartCardAdapter}"
-            android:visibility="@{hasCartItem ? View.VISIBLE : View.GONE}"
+            android:visibility='@{visibilityAction == "hasCartItem" ? View.VISIBLE : View.GONE}'
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/linearLayoutTotal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_cart_total"
             android:orientation="horizontal"
-            android:visibility="@{hasCartItem ? View.VISIBLE : View.GONE}"
+            android:visibility='@{visibilityAction == "hasCartItem" ? View.VISIBLE : View.GONE}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -122,9 +123,9 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/bg_cart_button"
+                    android:onClick="@{() -> cartFragment.confirmCartTotal()}"
                     android:paddingStart="60dp"
                     android:paddingEnd="60dp"
-                    android:onClick="@{() -> cartFragment.confirmCartTotal()}"
                     android:text="@string/cart_total_button"
                     android:textColor="@color/white"
                     android:textSize="@dimen/cart_total_button"
@@ -143,7 +144,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="200dp"
             android:src="@drawable/vc_cart"
-            android:visibility="@{hasCartItem ? View.GONE : View.VISIBLE}"
+            android:visibility='@{visibilityAction == "noData" ? View.VISIBLE : View.GONE}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCartTitle"
@@ -158,9 +159,36 @@
             android:text="@string/cart_no_data"
             android:textColor="@color/black"
             android:textSize="@dimen/cart_no_data"
-            android:visibility="@{hasCartItem ? View.GONE : View.VISIBLE}"
+            android:visibility='@{visibilityAction == "noData" ? View.VISIBLE : View.GONE}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivCartNoData" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/avOrderAnimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:visibility='@{visibilityAction == "orderTaken" ? View.VISIBLE : View.GONE}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tvOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="200dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/order_text"
+            android:textColor="@color/cart_total"
+            android:textSize="@dimen/order_text"
+            android:visibility='@{visibilityAction == "orderTaken" ? View.VISIBLE : View.GONE}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

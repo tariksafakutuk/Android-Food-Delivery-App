@@ -26,6 +26,7 @@ class CartFragment : Fragment() {
     @Inject lateinit var loginPref: LoginPref
     private lateinit var viewModel: CartViewModel
     private var username = ""
+    private var isConfirmOrder = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +43,18 @@ class CartFragment : Fragment() {
 
         viewModel.cartFoodCardList.observe(viewLifecycleOwner) {
             when (it.size) {
-                0 -> binding.hasCartItem = false
+                0 -> {
+                    if (isConfirmOrder) {
+                        binding.visibilityAction = "orderTaken"
+                        binding.avOrderAnimation.setAnimation(R.raw.order)
+                        binding.avOrderAnimation.playAnimation()
+                    } else {
+                        binding.visibilityAction = "noData"
+                    }
+                }
+
                 else -> {
-                    binding.hasCartItem = true
+                    binding.visibilityAction = "hasCartItem"
                     binding.cartCardAdapter = CartCardAdapter(requireContext(), it, viewModel, username)
                 }
             }
@@ -68,6 +78,7 @@ class CartFragment : Fragment() {
             .setAction("Evet") {
                 CoroutineScope(Dispatchers.Main).launch {
                     val username = loginPref.readUsername()
+                    isConfirmOrder = true
                     viewModel.confirmCartTotal(username)
                 }
             }

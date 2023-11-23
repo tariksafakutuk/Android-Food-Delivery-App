@@ -30,4 +30,5 @@
     <string name="update_account_button">Güncelle</string>
     <string name="product_detail_title">Ürün Detayı</string>
     <string name="product_detail_star">4.4 (289)</string>
+    <string name="order_text">Siparişiniz Alındı</string>
 </resources>
